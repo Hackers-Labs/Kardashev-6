@@ -468,7 +468,7 @@ def extract_packaging_info(image_path, output_dir=None):
         for d in detections
     ]
 
-    return {
+    result = {
         "image_id": image_base,
         "source_image": {
             "path": norm_source_path,
@@ -490,6 +490,17 @@ def extract_packaging_info(image_path, output_dir=None):
         },
         "legal_metrology_compliance": compliance_report,
     }
+
+    # Automatically save result JSON file to disk as well
+    json_path = os.path.join(target_dir, f"{image_base}_result.json")
+    try:
+        import json
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2)
+    except Exception:
+        pass
+
+    return result
 
 
 if __name__ == "__main__":
