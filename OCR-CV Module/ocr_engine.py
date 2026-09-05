@@ -188,8 +188,9 @@ def evaluate_legal_metrology_compliance(detections, img_height):
         violations.append("Rule 6(1)(c) Violation: Net quantity declaration is missing.")
 
     # 3. Rule 6(1)(d): Month & Year of Packing/Mfg
+    # Handles both labeled (MFG/PKD/DOM/DATE) and standalone stamped dates on bottles (e.g. 14/05/26, 01/02/27)
     date_regex = re.search(
-        r"(?:MFG|MFD|PKD|PACKED|DATE|DOM|DOP)\s*[:.\-]?\s*([0-9]{1,2}[/\-\.][0-9]{2,4}|(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*\s*[0-9]{2,4})",
+        r"(?:(?:MFG|MFD|PKD|PACKED|DATE|DOM|DOP|USE\s*BY|EXP\.?\s*DATE|EXPIRY)\s*[:.\-]?\s*)?([0-3]?[0-9][/\-\.][0-1]?[0-9][/\-\.][0-9]{2,4}|(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*\s*[0-9]{2,4})",
         full_text,
         re.IGNORECASE,
     )
@@ -386,6 +387,42 @@ def draw_visual_annotations(image_cv, detections, compliance_report):
     return annotated
 
 
+def detect_and_correct_orientation(image_cv):
+    """
+    Tests orientations (0, 90, 180, 270 deg) if initial detection is poor,
+    ensuring mobile phone photos taken sideways are automatically righted.
+    """
+    res_0 = reader.readtext(image_cv, min_size=5)
+    score_0 = sum(len(r[1]) * r[2] for r in res_0 if len(r[1]) > 2)
+
+    # If 0 deg already has high score, keep it
+    if score_0 > 150:
+        return image_cv, res_0, 0
+
+    best_img = image_cv
+    best_results = res_0
+    max_score = score_0
+    best_angle = 0
+
+    rotations = [
+        (90, cv2.ROTATE_90_CLOCKWISE),
+        (180, cv2.ROTATE_180),
+        (270, cv2.ROTATE_90_COUNTERCLOCKWISE),
+    ]
+
+    for angle, flag in rotations:
+        rot = cv2.rotate(image_cv, flag)
+        res = reader.readtext(rot, min_size=5)
+        score = sum(len(r[1]) * r[2] for r in res if len(r[1]) > 2)
+        if score > max_score * 1.4:
+            max_score = score
+            best_img = rot
+            best_results = res
+            best_angle = angle
+
+    return best_img, best_results, best_angle
+
+
 def extract_packaging_info(image_path, output_dir=None):
     """
     Main entry point for SIH Legal Metrology AI Pipeline.
@@ -404,22 +441,22 @@ def extract_packaging_info(image_path, output_dir=None):
 
     # Step 1: Preprocessing (Auto-crop & CLAHE glare suppression)
     cropped_img, was_cropped, _ = auto_crop_package(original_img)
-    proc_h, proc_w = cropped_img.shape[:2]
     enhanced_img = enhance_contrast_clahe(cropped_img)
 
-    # Save processed image
-    processed_image_path = os.path.join(target_dir, f"{image_base}_processed.jpg")
-    cv2.imwrite(processed_image_path, enhanced_img)
+    # Step 2: Auto-orientation check & EasyOCR Extraction
+    final_img, raw_results, detected_angle = detect_and_correct_orientation(enhanced_img)
+    proc_h, proc_w = final_img.shape[:2]
 
-    # Step 2: EasyOCR Extraction
-    raw_results = reader.readtext(enhanced_img)
+    # Save processed image (in corrected orientation)
+    processed_image_path = os.path.join(target_dir, f"{image_base}_processed.jpg")
+    cv2.imwrite(processed_image_path, final_img)
 
     detections = []
     font_heights = []
 
     for idx, (raw_bbox, text, conf) in enumerate(raw_results):
         text = text.strip()
-        if conf < 0.25 or not text:
+        if conf < 0.18 or not text:
             continue
 
         # Standard 4-point polygon format: [[x1, y1], [x2, y2], [x3, y3], [x4, y4]]
@@ -448,7 +485,7 @@ def extract_packaging_info(image_path, output_dir=None):
 
     # Step 4: Visual Annotation
     annotated_image_path = os.path.join(target_dir, f"{image_base}_annotated.jpg")
-    annotated_img = draw_visual_annotations(cropped_img, detections, compliance_report)
+    annotated_img = draw_visual_annotations(final_img, detections, compliance_report)
     cv2.imwrite(annotated_image_path, annotated_img)
 
     # Step 5: Construct Exact Target JSON Schema
