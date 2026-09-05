@@ -3,19 +3,15 @@ SIH Hackathon - Legal Metrology Packaged Commodities Compliance Scanner
 Module: OCR-CV Module / ocr_engine.py
 
 Statutory compliance verification engine under the Legal Metrology
-(Packaged Commodities) Rules, 2011:
-- Rule 6(1)(da): Retail sale price (MRP) and "inclusive of all taxes" declaration
-- Rule 6(1)(c): Net quantity with standard units (g, kg, ml, l, N, etc.)
-- Rule 6(1)(d): Month & Year of manufacture / packing
-- Rule 6(1)(a): Name and address of manufacturer / packer / importer
-- Rule 6(1)(e): Consumer Care contact (Helpline number / Email address)
-- Rule 7: Minimum font size and proportion check (flagging microscopic text)
+(Packaged Commodities) Rules, 2011.
 
-Features:
-- Computer Vision pre-processing: Auto-crop package contour & LAB-CLAHE glare reduction
-- EasyOCR robust inference
-- Statutory rule evaluation & violation generator
-- Visual bounding box annotator with HUD summary banner
+Standardized output JSON contract:
+- image_id: Product / Image identifier
+- source_image: path, width, height
+- processed_image: path, width, height (CLAHE & auto-cropped)
+- annotated_image: path (with color-coded bounding boxes)
+- ocr: engine, language, detections list with id, text, confidence, bbox [[x1,y1],[x2,y2],[x3,y3],[x4,y4]]
+- legal_metrology_compliance: Statutory rule evaluation & violations
 """
 
 import os
@@ -35,7 +31,7 @@ import easyocr
 import numpy as np
 
 print("[OCR-CV] Initializing EasyOCR Engine (English)...")
-# CPU mode for universal compatibility; verbose=False prevents unhandled progress bars on Windows
+# CPU mode for universal compatibility; verbose=False prevents Windows charmap crashes
 reader = easyocr.Reader(["en"], gpu=False, verbose=False)
 print("[OCR-CV] EasyOCR Engine Loaded Successfully!")
 
@@ -54,13 +50,12 @@ def auto_crop_package(image_cv, min_area_ratio=0.15):
     """
     Auto-detects the commodity package boundary from the background using
     edge detection and largest contour approximation.
-    Returns (cropped_image, was_cropped, bounding_box_tuple).
+    Returns (cropped_image, was_cropped, bounding_box_dict).
     """
     h, w = image_cv.shape[:2]
     gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-    # Edge detection & dilation to connect contour boundaries
     edges = cv2.Canny(blurred, 40, 140)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
     dilated = cv2.dilate(edges, kernel, iterations=2)
@@ -73,10 +68,8 @@ def auto_crop_package(image_cv, min_area_ratio=0.15):
     area = cv2.contourArea(largest)
     total_area = h * w
 
-    # Only crop if contour represents a distinct packaging foreground object
     if area > (total_area * min_area_ratio) and area < (total_area * 0.98):
         bx, by, bw, bh = cv2.boundingRect(largest)
-        # Add 3% safety margin
         margin_x = int(bw * 0.03)
         margin_y = int(bh * 0.03)
         x1 = max(0, bx - margin_x)
@@ -91,8 +84,8 @@ def auto_crop_package(image_cv, min_area_ratio=0.15):
 
 def enhance_contrast_clahe(image_cv):
     """
-    Applies CLAHE (Contrast Limited Adaptive Histogram Equalization) in LAB color space
-    to suppress glare on plastic wrappers/bottles and enhance text visibility.
+    Applies CLAHE in LAB color space to suppress glare on plastic wrappers/bottles
+    and enhance text contrast before OCR.
     """
     lab = cv2.cvtColor(image_cv, cv2.COLOR_BGR2LAB)
     l_channel, a_channel, b_channel = cv2.split(lab)
@@ -104,7 +97,7 @@ def enhance_contrast_clahe(image_cv):
     return cv2.cvtColor(enhanced_lab, cv2.COLOR_LAB2BGR)
 
 
-def evaluate_legal_metrology_compliance(detected_lines, img_height):
+def evaluate_legal_metrology_compliance(detections, img_height):
     """
     Audits detected lines against Legal Metrology (Packaged Commodities) Rules, 2011:
     - Rule 6(1)(da): MRP & "inclusive of all taxes"
@@ -114,13 +107,11 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
     - Rule 6(1)(e): Consumer Care helpline & email
     - Rule 7: Minimum font size and proportion check
     """
-    full_text = " | ".join([line["text"] for line in detected_lines])
+    full_text = " | ".join([d["text"] for d in detections])
     violations = []
     rules = {}
 
-    # -------------------------------------------------------------
-    # 1. Rule 6(1)(da): Maximum Retail Price (MRP) & Tax Declaration
-    # -------------------------------------------------------------
+    # 1. Rule 6(1)(da): MRP & Inclusive of all taxes
     mrp_regex = re.search(
         r"(?:MRP|M\.R\.P\.?|MAX(?:IMUM)?\s*RETAIL\s*PRICE|Rs\.?|₹)\s*[:.\-]?\s*(?:Rs\.?|₹)?\s*([0-9]+(?:\.[0-9]{1,2})?)",
         full_text,
@@ -160,9 +151,7 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
             "Rule 6(1)(da) Violation: Maximum Retail Price (MRP) declaration is missing."
         )
 
-    # -------------------------------------------------------------
-    # 2. Rule 6(1)(c): Net Quantity & Standard Measurement Units
-    # -------------------------------------------------------------
+    # 2. Rule 6(1)(c): Net Quantity
     net_qty_regex = re.search(
         r"(?:(?:NET\s*(?:WT|WEIGHT|QTY|QUANTITY)?)\s*[:.\-]?\s*)?([0-9]+(?:\.[0-9]+)?\s*(g|gm|gms|kg|ml|l|ltr|litres?|units?|pieces?|N))\b",
         full_text,
@@ -170,7 +159,6 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
     )
     if net_qty_regex:
         unit = net_qty_regex.group(2).lower()
-        # Prescribed standard units under Legal Metrology Rules
         is_standard_unit = unit in ["g", "gm", "gms", "kg", "ml", "l", "ltr", "litres", "n", "units", "pieces"]
         status = "COMPLIANT" if is_standard_unit else "NON_COMPLIANT"
 
@@ -199,9 +187,7 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
         }
         violations.append("Rule 6(1)(c) Violation: Net quantity declaration is missing.")
 
-    # -------------------------------------------------------------
-    # 3. Rule 6(1)(d): Month & Year of Packing / Manufacturing
-    # -------------------------------------------------------------
+    # 3. Rule 6(1)(d): Month & Year of Packing/Mfg
     date_regex = re.search(
         r"(?:MFG|MFD|PKD|PACKED|DATE|DOM|DOP)\s*[:.\-]?\s*([0-9]{1,2}[/\-\.][0-9]{2,4}|(?:JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[a-z]*\s*[0-9]{2,4})",
         full_text,
@@ -227,9 +213,7 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
             "Rule 6(1)(d) Violation: Month and Year of manufacture/packing is missing."
         )
 
-    # -------------------------------------------------------------
-    # 4. Rule 6(1)(a): Name and Address of Manufacturer / Packer
-    # -------------------------------------------------------------
+    # 4. Rule 6(1)(a): Manufacturer / Packer Details
     mfr_regex = re.search(
         r"(?:MFD\s*BY|MFG\s*BY|PACKED\s*BY|MARKETED\s*BY|MANUFACTURED\s*(?:&|AND)?\s*PACKED\s*BY)\s*[:.\-]?\s*([A-Za-z0-9\s,\.\-]{6,80})",
         full_text,
@@ -253,9 +237,7 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
             "Rule 6(1)(a) Violation: Name and complete address of the manufacturer/packer is missing."
         )
 
-    # -------------------------------------------------------------
-    # 5. Rule 6(1)(e): Consumer Care Helpline & Email
-    # -------------------------------------------------------------
+    # 5. Rule 6(1)(e): Consumer Care Helpline / Email
     email_regex = re.search(r"([\w\.-]+@[\w\.-]+\.\w+)", full_text)
     phone_regex = re.search(
         r"(?:(?:CARE|HELPLINE|PHONE|TEL|CONTACT|TOLL\s*FREE)\s*[:.\-]?\s*)?(\+?[0-9\-\s]{8,14})\b",
@@ -288,12 +270,10 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
             "Rule 6(1)(e) Violation: Consumer care details (helpline or email) is missing."
         )
 
-    # -------------------------------------------------------------
-    # 6. Rule 7: Minimum Font Size & Height Proportionality
-    # -------------------------------------------------------------
-    too_small_count = sum(1 for line in detected_lines if line["font_status"] == "TOO_SMALL")
-    compliant_font_count = len(detected_lines) - too_small_count
-    font_heights = [line["font_height_px"] for line in detected_lines]
+    # 6. Rule 7: Minimum Font Size
+    too_small_count = sum(1 for d in detections if d.get("font_status") == "TOO_SMALL")
+    compliant_font_count = len(detections) - too_small_count
+    font_heights = [d.get("font_height_px", 0) for d in detections]
 
     rule_7_status = "COMPLIANT" if too_small_count == 0 else "NON_COMPLIANT"
     rules["rule_7_font_size"] = {
@@ -309,9 +289,7 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
             f"Rule 7 Violation: {too_small_count} text segment(s) detected with microscopic font height (<1.2% of display area)."
         )
 
-    # -------------------------------------------------------------
-    # Overall Score Calculation
-    # -------------------------------------------------------------
+    # Calculate overall compliance statistics
     total_rules = len(rules)
     passed_rules = sum(1 for r in rules.values() if r["status"] == "COMPLIANT")
     compliance_score = round((passed_rules / total_rules) * 100, 1)
@@ -327,28 +305,28 @@ def evaluate_legal_metrology_compliance(detected_lines, img_height):
     }
 
 
-def draw_visual_annotations(image_cv, detected_lines, compliance_report):
+def draw_visual_annotations(image_cv, detections, compliance_report):
     """
-    Annotates the commodity package with color-coded bounding boxes:
+    Annotates the package with color-coded 4-point bounding polygons:
     - Green (46, 204, 113): Rule-compliant / Normal font
     - Red (52, 73, 235): Non-compliant / Microscopic font / Rule 7 violation
-    Overlays a professional HUD header banner with compliance statistics.
+    Overlays a HUD header banner with compliance statistics.
     """
     annotated = image_cv.copy()
     h_img, w_img, _ = annotated.shape
 
-    # 1. Draw Bounding Boxes and Status Badges
-    for line in detected_lines:
-        box = line["box"]
-        x, y, w, h = box["x"], box["y"], box["w"], box["h"]
-        is_normal = line["font_status"] == "NORMAL"
+    # 1. Draw 4-point Bounding Boxes
+    for det in detections:
+        bbox = det["bbox"]
+        pts = np.array(bbox, np.int32).reshape((-1, 1, 2))
+        is_normal = det.get("font_status") == "NORMAL"
         color = (46, 204, 113) if is_normal else (52, 73, 235)  # Green vs Red
 
-        # Box border
-        cv2.rectangle(annotated, (x, y), (x + w, y + h), color, 2)
+        cv2.polylines(annotated, [pts], isClosed=True, color=color, thickness=2)
 
-        # Badge banner above box
-        label = f"{line['text'][:22]} | {line['font_status']}"
+        # Label tag above bounding box
+        x, y = bbox[0]
+        label = f"{det['text'][:20]} [{det.get('font_status', 'NORMAL')}]"
         (lbl_w, lbl_h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.42, 1)
         lbl_y = max(lbl_h + 6, y - 4)
 
@@ -370,13 +348,12 @@ def draw_visual_annotations(image_cv, detected_lines, compliance_report):
             cv2.LINE_AA,
         )
 
-    # 2. Semi-transparent HUD Header Banner
+    # 2. HUD Header Banner
     banner_h = 50
     overlay = annotated.copy()
     cv2.rectangle(overlay, (0, 0), (w_img, banner_h), (18, 22, 28), -1)
     cv2.addWeighted(overlay, 0.85, annotated, 0.15, 0, annotated)
 
-    # Header Title
     title_text = "LEGAL METROLOGY SCANNER (SIH)"
     cv2.putText(
         annotated,
@@ -389,7 +366,6 @@ def draw_visual_annotations(image_cv, detected_lines, compliance_report):
         cv2.LINE_AA,
     )
 
-    # Subtitle / Stats
     score = compliance_report["compliance_score_pct"]
     v_count = len(compliance_report["violations"])
     status = compliance_report["overall_status"]
@@ -410,20 +386,10 @@ def draw_visual_annotations(image_cv, detected_lines, compliance_report):
     return annotated
 
 
-def extract_packaging_info(image_path, save_annotated=True, output_image_path=None):
+def extract_packaging_info(image_path, output_dir=None):
     """
-    Main entry point for SIH Legal Metrology AI Pipeline:
-    1. Loads packaging image & evaluates blur sharpness.
-    2. Performs auto-crop contour detection & LAB-CLAHE contrast enhancement.
-    3. Runs EasyOCR text extraction and bounding box localization.
-    4. Evaluates Rule 7 font proportionality and statutory mandatory declarations:
-       - Rule 6(1)(da): MRP & inclusive of all taxes
-       - Rule 6(1)(c): Net quantity with standard units
-       - Rule 6(1)(d): Month & Year of packing/mfg
-       - Rule 6(1)(a): Manufacturer details
-       - Rule 6(1)(e): Consumer Care helpline & email
-       - Rule 7: Font size / ratio check
-    5. Saves annotated output image 'annotated_sample.jpg' with color-coded bounding boxes.
+    Main entry point for SIH Legal Metrology AI Pipeline.
+    Returns JSON formatted according to the agreed backend/frontend schema contract.
     """
     if not os.path.exists(image_path):
         return {"error": f"Image file not found: {image_path}"}
@@ -433,86 +399,96 @@ def extract_packaging_info(image_path, save_annotated=True, output_image_path=No
         return {"error": "Invalid or corrupt image format"}
 
     orig_h, orig_w = original_img.shape[:2]
-    blur_val = check_blur_score(original_img)
+    image_base = os.path.splitext(os.path.basename(image_path))[0]
+    target_dir = output_dir or os.path.dirname(image_path) or "."
 
-    # Step 1: Computer Vision Preprocessing
-    # Auto-crop package contour if on background
-    cropped_img, was_cropped, crop_box = auto_crop_package(original_img)
+    # Step 1: Preprocessing (Auto-crop & CLAHE glare suppression)
+    cropped_img, was_cropped, _ = auto_crop_package(original_img)
     proc_h, proc_w = cropped_img.shape[:2]
-
-    # Contrast enhancement using CLAHE in LAB space for glare suppression
     enhanced_img = enhance_contrast_clahe(cropped_img)
 
-    # Step 2: EasyOCR Text & Bounding Box Extraction
-    # Pass enhanced numpy array to EasyOCR
+    # Save processed image
+    processed_image_path = os.path.join(target_dir, f"{image_base}_processed.jpg")
+    cv2.imwrite(processed_image_path, enhanced_img)
+
+    # Step 2: EasyOCR Extraction
     raw_results = reader.readtext(enhanced_img)
 
-    detected_lines = []
+    detections = []
     font_heights = []
 
-    for bbox, text, conf in raw_results:
+    for idx, (raw_bbox, text, conf) in enumerate(raw_results):
         text = text.strip()
         if conf < 0.25 or not text:
             continue
 
-        xs = [p[0] for p in bbox]
-        ys = [p[1] for p in bbox]
-        x_min, x_max = int(min(xs)), int(max(xs))
-        y_min, y_max = int(min(ys)), int(max(ys))
+        # Standard 4-point polygon format: [[x1, y1], [x2, y2], [x3, y3], [x4, y4]]
+        bbox_pts = [[int(round(pt[0])), int(round(pt[1]))] for pt in raw_bbox]
 
-        box_h = max(1, y_max - y_min)
-        box_w = max(1, x_max - x_min)
+        ys = [p[1] for p in bbox_pts]
+        box_h = max(1, max(ys) - min(ys))
         font_heights.append(box_h)
 
-        # Rule 7 Font Size Proportion Check relative to package display height
+        # Rule 7 Font Size Proportion Check
         font_ratio = round((box_h / proc_h) * 100, 2)
         font_status = "NORMAL" if font_ratio >= 1.2 else "TOO_SMALL"
 
-        detected_lines.append({
+        detections.append({
+            "id": idx + 1,
             "text": text,
-            "confidence": round(float(conf), 3),
-            "box": {"x": x_min, "y": y_min, "w": box_w, "h": box_h},
+            "confidence": round(float(conf), 2),
+            "bbox": bbox_pts,
             "font_height_px": box_h,
             "font_ratio_pct": font_ratio,
             "font_status": font_status,
         })
 
-    avg_font_size = round(float(np.mean(font_heights)), 1) if font_heights else 0.0
-
     # Step 3: Statutory Compliance Evaluation
-    compliance_summary = evaluate_legal_metrology_compliance(detected_lines, proc_h)
+    compliance_report = evaluate_legal_metrology_compliance(detections, proc_h)
 
     # Step 4: Visual Annotation
-    saved_annotated_path = None
-    if save_annotated and detected_lines:
-        annotated_result = draw_visual_annotations(
-            cropped_img, detected_lines, compliance_summary
-        )
-        target_path = (
-            output_image_path
-            or os.path.join(
-                os.path.dirname(image_path) or ".",
-                f"annotated_{os.path.basename(image_path)}",
-            )
-        )
-        cv2.imwrite(target_path, annotated_result)
-        saved_annotated_path = target_path
+    annotated_image_path = os.path.join(target_dir, f"{image_base}_annotated.jpg")
+    annotated_img = draw_visual_annotations(cropped_img, detections, compliance_report)
+    cv2.imwrite(annotated_image_path, annotated_img)
 
-    # Step 5: Structured JSON Output
+    # Step 5: Construct Exact Target JSON Schema
+    # Normalize paths to use forward slashes for clean cross-platform JSON
+    norm_source_path = image_path.replace("\\", "/")
+    norm_processed_path = processed_image_path.replace("\\", "/")
+    norm_annotated_path = annotated_image_path.replace("\\", "/")
+
+    # Clean detections for the pure OCR contract (removing internal helper fields)
+    ocr_detections = [
+        {
+            "id": d["id"],
+            "text": d["text"],
+            "confidence": d["confidence"],
+            "bbox": d["bbox"],
+        }
+        for d in detections
+    ]
+
     return {
-        "metadata": {
-            "dimensions": {"width": orig_w, "height": orig_h},
-            "blur_score": blur_val,
-            "is_blurry": blur_val < 60.0,
-            "avg_font_size_px": avg_font_size,
-            "package_auto_cropped": was_cropped,
-            "crop_bounding_box": crop_box,
-            "processed_dimensions": {"width": proc_w, "height": proc_h},
+        "image_id": image_base,
+        "source_image": {
+            "path": norm_source_path,
+            "width": orig_w,
+            "height": orig_h,
         },
-        "lines": detected_lines,
-        "legal_metrology_compliance": compliance_summary,
-        "annotated_image_path": saved_annotated_path,
-        "full_text": " | ".join([line["text"] for line in detected_lines]),
+        "processed_image": {
+            "path": norm_processed_path,
+            "width": proc_w,
+            "height": proc_h,
+        },
+        "annotated_image": {
+            "path": norm_annotated_path,
+        },
+        "ocr": {
+            "engine": "EasyOCR",
+            "language": ["en"],
+            "detections": ocr_detections,
+        },
+        "legal_metrology_compliance": compliance_report,
     }
 
 
@@ -524,10 +500,10 @@ if __name__ == "__main__":
         input_img = sys.argv[1]
 
     if os.path.exists(input_img):
-        print(f"[OCR-CV] Processing '{input_img}' for SIH Legal Metrology Compliance...")
-        result = extract_packaging_info(input_img, save_annotated=True)
+        print(f"[OCR-CV] Processing '{input_img}'...")
+        result = extract_packaging_info(input_img)
         print(json.dumps(result, indent=2))
-        if result.get("annotated_image_path"):
-            print(f"\n[OCR-CV] Annotated visualization output saved to: {result['annotated_image_path']}")
+        print(f"\n[OCR-CV] Processed image saved: {result['processed_image']['path']}")
+        print(f"[OCR-CV] Annotated image saved: {result['annotated_image']['path']}")
     else:
         print(f"[OCR-CV] File not found: {input_img}. Run with: python ocr_engine.py <image_path>")
