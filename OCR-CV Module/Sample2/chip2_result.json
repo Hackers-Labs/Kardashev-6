@@ -43,6 +43,29 @@
         ]
       },
       {
+        "id": 2,
+        "text": "2919074626",
+        "confidence": 0.23,
+        "bbox": [
+          [
+            539,
+            603
+          ],
+          [
+            657,
+            603
+          ],
+          [
+            657,
+            639
+          ],
+          [
+            539,
+            639
+          ]
+        ]
+      },
+      {
         "id": 5,
         "text": "Re",
         "confidence": 0.93,
@@ -114,10 +137,10 @@
     ]
   },
   "legal_metrology_compliance": {
-    "compliance_score_pct": 16.7,
+    "compliance_score_pct": 33.3,
     "overall_status": "NON_COMPLIANT",
     "total_rules_checked": 6,
-    "rules_passed_count": 1,
+    "rules_passed_count": 2,
     "rules_evaluation": {
       "rule_6_1_da_mrp": {
         "status": "NON_COMPLIANT",
@@ -150,26 +173,25 @@
         "details": null
       },
       "rule_6_1_e_consumer_care": {
-        "status": "NON_COMPLIANT",
+        "status": "COMPLIANT",
         "rule_name": "Rule 6(1)(e) - Consumer Care Helpline / Email",
-        "found": false,
-        "contact": null
+        "found": true,
+        "contact": "Phone: 2919074626"
       },
       "rule_7_font_size": {
         "status": "COMPLIANT",
         "rule_name": "Rule 7 - Minimum Font Size & Proportionality",
-        "compliant_lines_count": 4,
+        "compliant_lines_count": 5,
         "too_small_lines_count": 0,
         "min_font_height_px": 24,
-        "avg_font_height_px": 30.5
+        "avg_font_height_px": 31.6
       }
     },
     "violations": [
       "Rule 6(1)(da) Violation: Maximum Retail Price (MRP) declaration is missing.",
       "Rule 6(1)(c) Violation: Net quantity declaration is missing.",
       "Rule 6(1)(d) Violation: Month and Year of manufacture/packing is missing.",
-      "Rule 6(1)(a) Violation: Name and complete address of the manufacturer/packer is missing.",
-      "Rule 6(1)(e) Violation: Consumer care details (helpline or email) is missing."
+      "Rule 6(1)(a) Violation: Name and complete address of the manufacturer/packer is missing."
     ]
   }
 }
