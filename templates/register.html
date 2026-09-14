@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Officer Registration | National Legal Metrology Portal</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/auth.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      color: #0f172a;
+    }
+    .gov-flag-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #f97316 0%, #f97316 33.3%, #ffffff 33.3%, #ffffff 66.6%, #16a34a 66.6%, #16a34a 100%);
+    }
+    .auth-container {
+      min-height: calc(100vh - 4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+      width: 100%;
+      max-width: 540px;
+      padding: 36px 32px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .form-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #0f172a;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #0f2b48;
+      box-shadow: 0 0 0 2px rgba(15, 43, 72, 0.1);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 11px;
+      background: #0f2b48;
+      color: #ffffff;
+      border: 1px solid #0f2b48;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: #15385e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official Tricolor Accent Bar -->
+  <div class="gov-flag-bar"></div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+
+      <!-- Official Header -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 6px; background: #f1f5f9; color: #0f2b48; margin-bottom: 12px;">
+          <i class="fas fa-shield-alt" style="font-size: 1.4rem;"></i>
+        </div>
+        <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+          Government of India &bull; Department of Consumer Affairs
+        </div>
+        <h1 style="font-size: 1.4rem; font-weight: 800; color: #0f2b48; margin: 4px 0 6px 0;">
+          Officer & Inspector Registration
+        </h1>
+        <p style="font-size: 0.84rem; color: #64748b; margin: 0;">
+          Create an official authorized profile for statutory package compliance inspections.
+        </p>
+      </div>
+
+      {% if error %}
+        <div style="margin-bottom: 20px; padding: 10px 14px; background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; border-radius: 4px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+      {% endif %}
+
+      <form action="/register" method="POST">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Full Officer Name *</label>
+            <input type="text" name="full_name" class="form-input" required placeholder="e.g. Rajesh Kumar" value="{{ form.full_name|default('') }}" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Employee / Badge ID</label>
+            <input type="text" name="employee_id" class="form-input" placeholder="e.g. DOCA-9402" value="{{ form.employee_id|default('') }}" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Official Email Address *</label>
+          <input type="email" name="email" class="form-input" required placeholder="officer@gov.in or email@domain.com" value="{{ form.email|default('') }}" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <input type="text" name="department" class="form-input" value="{{ form.department|default('Legal Metrology Enforcement') }}" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Enforcement Role *</label>
+            <select name="role" class="form-input" style="background:#fff; font-weight: 600;" required>
+              <option value="inspector" {% if form.role == 'inspector' or not form.role %}selected{% endif %}>Field Inspector (Frontline Market Audits)</option>
+              <option value="officer" {% if form.role == 'officer' %}selected{% endif %}>Supervisory Enforcement Officer (Zonal / Compounding)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input type="password" name="password" class="form-input" required placeholder="Min 8 chars, 1 upper, 1 lower, 1 digit, 1 symbol" />
+            <span style="font-size: 0.72rem; color: #64748b;">Must have &ge;8 chars, uppercase, lowercase, digit & symbol.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Confirm Password *</label>
+            <input type="password" name="confirm_password" class="form-input" required placeholder="Re-enter password" />
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 0.8rem; color: #64748b; display: flex; align-items: flex-start; gap: 8px;">
+            <input type="checkbox" required checked style="margin-top: 2px;">
+            <span>I confirm that I am an authorized enforcement officer or designated inspection auditor operating under the Legal Metrology Act, 2009.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-user-check"></i> Complete Official Registration
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 0.84rem; color: #64748b;">
+        Already registered? <a href="/login" style="color: #0f2b48; font-weight: 700; text-decoration: none;">Sign In here</a>
+        <div style="margin-top: 10px;">
+          <a href="/" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; Return to National Portal</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Notice Footer -->
+    <div style="margin-top: 18px; font-size: 0.74rem; color: #94a3b8; text-align: center;">
+      Authorized Government Portal &bull; Department of Consumer Affairs &bull; Legal Metrology Division
+    </div>
+  </div>
+
+</body>
+</html>

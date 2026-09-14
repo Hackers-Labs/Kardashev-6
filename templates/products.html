@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="products-wrapper" style="max-width: 1200px; margin: 0 auto;">
+
+  <div style="margin-bottom: 24px;">
+    <span style="background: #eff6ff; color: #0f2b48; border: 1px solid #bfdbfe; padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 6px;">
+      National Repository &bull; Pre-Packaged Retail Commodities
+    </span>
+    <h1 style="font-size: 1.5rem; font-weight: 800; color: #0f2b48; margin: 0;">
+      Commodities & Product Database
+    </h1>
+    <p style="color: #64748b; font-size: 0.85rem; margin-top: 2px;">
+      Database of inspected retail packages, GTIN barcodes, and historical statutory compliance indices.
+    </p>
+  </div>
+
+  <div class="gov-table-card">
+    <div class="gov-table-scroll">
+      <table class="gov-table">
+        <thead>
+          <tr>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Product Name</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Brand</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Category</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Manufacturer</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">GTIN Barcode</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Compliance Index</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+          <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s ease;">
+            <td style="padding: 12px 18px; font-size: 0.86rem; font-weight: 700; color: #0f2b48;">
+              {{ p.product_name }}
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.82rem; color: #0f2b48; font-weight: 600;">
+              {{ p.brand_name or 'N/A' }}
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.8rem; color: #64748b;">
+              {{ p.category }}
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.82rem; color: #475569;">
+              {{ p.manufacturer_name }}
+            </td>
+            <td style="padding: 12px 18px; font-family: monospace; font-size: 0.82rem; color: #64748b;">
+              {{ p.gtin_barcode or '—' }}
+            </td>
+            <td style="padding: 12px 18px;">
+              <span style="font-weight: 800; font-size: 0.84rem; color: {% if p.compliance_rate >= 90 %}#16a34a{% elif p.compliance_rate >= 70 %}#b45309{% else %}#dc2626{% endif %};">
+                {{ p.compliance_rate }}%
+              </span>
+              <span style="font-size: 0.72rem; color: #94a3b8; margin-left: 4px;">({{ p.total_inspections }} audits)</span>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="padding: 40px 18px; text-align: center; color: #64748b;">
+              <i class="fas fa-boxes" style="font-size: 1.4rem; color: #cbd5e1; margin-bottom: 8px; display: block;"></i>
+              <div style="font-weight: 700; color: #0f2b48; margin-bottom: 4px;">No Commodities Audited Yet</div>
+              <div style="font-size: 0.82rem;">Once you scan and inspect packaged commodities, verified products and compliance metrics will appear here.</div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

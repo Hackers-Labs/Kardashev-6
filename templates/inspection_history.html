@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="history-wrapper" style="max-width: 100%; margin: 0 auto;">
+
+  <!-- Compact Top Toolbar -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <h1 style="font-size: 1.15rem; font-weight: 800; color: #0f2b48; margin: 0;">
+        Statutory Inspection Ledger
+      </h1>
+      <span style="background: #e2e8f0; color: #334155; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">
+        {{ inspections|length }} Records
+      </span>
+    </div>
+
+    <!-- Search Form -->
+    <form method="GET" action="/history" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <input type="text" name="q" value="{{ query|default('') }}" placeholder="Search ID, brand, manufacturer..." style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.8rem; min-width: 200px;">
+      
+      {% if all_inspectors %}
+      <select name="inspector_id" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.8rem; background: #fff; color: #0f172a;">
+        <option value="">All Inspectors</option>
+        {% for insp in all_inspectors %}
+          <option value="{{ insp.id }}" {% if selected_inspector == insp.id %}selected{% endif %}>{{ insp.full_name }} ({{ insp.employee_id }})</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+
+      <select name="status" style="padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.8rem; background: #fff; color: #0f172a;">
+        <option value="">All Statuses</option>
+        <option value="COMPLIANT" {% if selected_status == 'COMPLIANT' %}selected{% endif %}>Compliant</option>
+        <option value="POTENTIAL_NON_COMPLIANCE" {% if selected_status == 'POTENTIAL_NON_COMPLIANCE' %}selected{% endif %}>Violation</option>
+        <option value="REVIEW_REQUIRED" {% if selected_status == 'REVIEW_REQUIRED' %}selected{% endif %}>Review</option>
+      </select>
+      <button type="submit" style="background: #0f2b48; color: #fff; padding: 6px 14px; border-radius: 4px; border: 1px solid #0f2b48; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+        <i class="fas fa-search"></i> Search
+      </button>
+      {% if query or selected_status or selected_inspector %}
+        <a href="/history" style="background: #f1f5f9; color: #64748b; padding: 6px 10px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.78rem; text-decoration: none;">Reset</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- Inspections Table Card -->
+  <div class="gov-table-card">
+    <div class="gov-table-scroll">
+      <table class="gov-table">
+        <thead>
+          <tr>
+            <th style="width: 170px;">Inspection #</th>
+            <th style="min-width: 130px;">Commodity Product</th>
+            <th style="min-width: 180px;">Manufacturer / Packer</th>
+            {% if current_user.role in ['officer', 'admin'] %}
+            <th style="width: 140px;">Inspector</th>
+            {% endif %}
+            <th style="width: 130px;">Audit Date</th>
+            <th class="col-status" style="width: 110px;">Statutory Verdict</th>
+            <th class="col-status" style="width: 110px;">Officer Action</th>
+            <th class="col-action" style="width: 85px;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ins in inspections %}
+          <tr>
+            <td class="col-id">
+              <a href="/inspections/{{ ins.id }}" style="color: #0f2b48; text-decoration: none; font-weight: 700;">
+                {{ ins.inspection_number }}
+              </a>
+            </td>
+            <td class="col-product">
+              {{ ins.product.product_name if ins.product else 'Commodity Package' }}
+            </td>
+            <td class="col-company" title="{{ ins.company.company_name if ins.company else '' }}">
+              {{ ins.company.company_name if ins.company else 'Pending Verification' }}
+            </td>
+            {% if current_user.role in ['officer', 'admin'] %}
+            <td style="font-size: 0.76rem; color: #1e293b; font-weight: 600;">
+              <span style="display: inline-flex; align-items: center; gap: 4px; background: #f1f5f9; padding: 2px 6px; border-radius: 3px;">
+                <i class="fas fa-user-shield" style="font-size: 0.68rem; color: #64748b;"></i>
+                {{ ins.inspector.full_name if ins.inspector else 'Officer' }}
+              </span>
+            </td>
+            {% endif %}
+            <td class="col-date">
+              {{ ins.inspection_date.strftime('%d %b %Y, %H:%M') if ins.inspection_date else 'N/A' }}
+            </td>
+            <td class="col-status">
+              {% if ins.overall_status == 'COMPLIANT' %}
+                <span class="gov-pill gov-pill-compliant">
+                  <i class="fas fa-check-circle"></i> Compliant
+                </span>
+              {% elif ins.overall_status == 'POTENTIAL_NON_COMPLIANCE' %}
+                <span class="gov-pill gov-pill-violation">
+                  <i class="fas fa-times-circle"></i> Violation
+                </span>
+              {% else %}
+                <span class="gov-pill gov-pill-review">
+                  <i class="fas fa-exclamation-triangle"></i> Review
+                </span>
+              {% endif %}
+            </td>
+            <td class="col-status">
+              {% if ins.inspector_decision %}
+                <span style="font-weight: 700; font-size: 0.72rem; text-transform: uppercase; color: #0f2b48; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; border: 1px solid #cbd5e1; white-space: nowrap;">
+                  {{ ins.inspector_decision }}
+                </span>
+              {% else %}
+                <span style="color: #94a3b8; font-size: 0.74rem; font-style: italic; white-space: nowrap;">Pending</span>
+              {% endif %}
+            </td>
+            <td class="col-action">
+              <a href="/inspections/{{ ins.id }}" class="gov-action-btn">
+                <span>Details</span> <i class="fas fa-arrow-right"></i>
+              </a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" style="padding: 32px 14px; text-align: center; color: #64748b;">
+              <i class="fas fa-search" style="font-size: 1.4rem; margin-bottom: 8px; display: block; color: #cbd5e1;"></i>
+              No inspection records match the specified search criteria.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="inspection-container" style="max-width: 900px; margin: 0 auto;">
+
+  <!-- Official Header -->
+  <div style="margin-bottom: 24px;">
+    <span style="background: #eff6ff; color: #0f2b48; border: 1px solid #bfdbfe; padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 8px;">
+      Rule 6 Statutory Audit &bull; Field Surveillance
+    </span>
+    <h1 style="font-size: 1.5rem; font-weight: 800; color: #0f2b48; margin: 0 0 4px 0;">
+      Pre-Packaged Commodity Inspection Scanner
+    </h1>
+    <p style="color: #64748b; font-size: 0.88rem; margin: 0;">
+      Upload commodity label photo or capture via field camera for automated OCR and statutory declaration verification.
+    </p>
+  </div>
+
+  <!-- Main Scanner Card -->
+  <div class="card" style="background: #fff; border-radius: 6px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); padding: 24px; margin-bottom: 24px;">
+    
+    <!-- Upload / Camera Mode Toggle -->
+    <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px;">
+      <button type="button" id="tabUploadBtn" style="background: #0f2b48; color: #fff; padding: 8px 16px; border-radius: 4px; font-weight: 700; font-size: 0.85rem; border: 1px solid #0f2b48; cursor: pointer;" onclick="switchMode('upload')">
+        <i class="fas fa-file-upload"></i> Upload Image File
+      </button>
+      <button type="button" id="tabCameraBtn" style="background: #f1f5f9; color: #475569; padding: 8px 16px; border-radius: 4px; font-weight: 600; font-size: 0.85rem; border: 1px solid #cbd5e1; cursor: pointer;" onclick="switchMode('camera')">
+        <i class="fas fa-camera"></i> Live Device Camera
+      </button>
+    </div>
+
+    <!-- Mode 1: File Drag & Drop Box -->
+    <div id="uploadSection">
+      <div id="dropZone" style="border: 2px dashed #cbd5e1; border-radius: 6px; padding: 36px 20px; text-align: center; background: #f8fafc; cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileSelected(this.files[0])">
+        <div style="width: 48px; height: 48px; border-radius: 4px; background: #f1f5f9; color: #0f2b48; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 1.3rem;">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <h4 style="font-size: 1rem; font-weight: 700; color: #0f2b48; margin-bottom: 4px;">Select package photo or drag and drop</h4>
+        <p style="font-size: 0.82rem; color: #64748b; margin-bottom: 12px;">Supports high-resolution JPG, PNG, WEBP files</p>
+        <span style="background: #e2e8f0; color: #0f2b48; padding: 5px 12px; border-radius: 4px; font-size: 0.78rem; font-weight: 700;">Browse Local Files</span>
+      </div>
+    </div>
+
+    <!-- Mode 2: Camera Stream Preview -->
+    <div id="cameraSection" style="display: none; text-align: center;">
+      <div style="position: relative; max-width: 480px; margin: 0 auto 16px; border-radius: 6px; overflow: hidden; background: #000; border: 2px solid #0f2b48;">
+        <video id="cameraVideo" autoplay playsinline style="width: 100%; height: 300px; object-fit: cover;"></video>
+        <div style="position: absolute; top: 10%; left: 10%; right: 10%; bottom: 10%; border: 2px dashed rgba(255,255,255,0.7); pointer-events: none; border-radius: 4px;"></div>
+      </div>
+      <button type="button" style="background: #16a34a; color: #fff; padding: 9px 20px; border-radius: 4px; font-weight: 700; font-size: 0.88rem; border: none; cursor: pointer;" onclick="snapCameraPhoto()">
+        <i class="fas fa-camera"></i> Capture Package Photo
+      </button>
+    </div>
+
+    <!-- Selected Image Preview Box (Hidden initially) -->
+    <div id="previewSection" style="display: none; margin-top: 20px; padding: 18px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0;">
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <div style="position: relative; width: 140px; height: 140px; border-radius: 4px; overflow: hidden; border: 1px solid #cbd5e1; background: #000;">
+          <img id="imagePreview" src="" alt="Selected package" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div style="flex: 1;">
+          <h4 id="previewFilename" style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 2px;">package_photo.jpg</h4>
+          <p id="previewFilesize" style="font-size: 0.8rem; color: #64748b; margin-bottom: 14px;">Ready for statutory verification audit</p>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" id="startScanBtn" style="background: #0f2b48; color: #fff; padding: 9px 18px; border-radius: 4px; font-weight: 700; font-size: 0.86rem; border: none; cursor: pointer;" onclick="executeScan()">
+              <i class="fas fa-gavel"></i> Run Statutory Compliance Audit
+            </button>
+            <button type="button" style="background: #fff; color: #dc2626; border: 1px solid #fca5a5; padding: 8px 14px; border-radius: 4px; font-weight: 600; font-size: 0.84rem; cursor: pointer;" onclick="resetImage()">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-Time Processing Card (Hidden initially) -->
+    <div id="processingCard" style="display: none; margin-top: 24px; padding: 24px; background: #f8fafc; border-radius: 6px; border: 1px solid #cbd5e1; text-align: center;">
+      <div style="width: 40px; height: 40px; border: 3px solid #cbd5e1; border-top-color: #0f2b48; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 14px;"></div>
+      <h3 style="font-size: 1.1rem; font-weight: 800; color: #0f2b48; margin-bottom: 6px;">Auditing Commodity Declarations...</h3>
+      <p id="stepText" style="color: #475569; font-size: 0.86rem; font-weight: 600; margin-bottom: 18px;">
+        1. Preprocessing image and extracting text via OCR...
+      </p>
+
+      <div style="max-width: 380px; margin: 0 auto; text-align: left; display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; color: #475569;">
+        <div id="pStep1" style="color: #16a34a; font-weight: 600;"><i class="fas fa-check-circle"></i> Image enhancement & bounding box segmentation</div>
+        <div id="pStep2" style="color: #0f2b48; font-weight: 600;"><i class="fas fa-spinner fa-spin"></i> Optical Character Recognition (Tesseract / Gemini)</div>
+        <div id="pStep3" style="color: #94a3b8;"><i class="fas fa-circle-notch"></i> Semantic Extraction of MRP, Net Qty & Expiry</div>
+        <div id="pStep4" style="color: #94a3b8;"><i class="fas fa-circle-notch"></i> Legal Metrology Rule 6 & FSSAI Verdict</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Statutory Checklist Reference Card -->
+  <div class="card" style="background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; padding: 20px;">
+    <div style="font-size: 0.78rem; font-weight: 700; color: #0f2b48; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+      <i class="fas fa-info-circle" style="color: #b45309;"></i> Mandatory Statutory Declarations Checked (Rule 6, LM PC Rules 2011)
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.82rem; color: #475569;">
+      <div>&bull; Name & Complete Address of Manufacturer / Packer / Importer</div>
+      <div>&bull; Net Quantity in Standard Units of Weight or Measure</div>
+      <div>&bull; Maximum Retail Price (MRP) inclusive of all taxes</div>
+      <div>&bull; Unit Sale Price (USP) per g/ml/piece</div>
+      <div>&bull; Month and Year of Manufacture / Packing / Import</div>
+      <div>&bull; Consumer Care Details (Phone, Email & Contact Person)</div>
+      <div>&bull; Country of Origin for imported commodities</div>
+      <div>&bull; FSSAI License Number & Vegetarian / Non-Vegetarian Logo</div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+
+<script>
+  let selectedFile = null;
+  let videoStream = null;
+
+  function switchMode(mode) {
+    const tabUpload = document.getElementById('tabUploadBtn');
+    const tabCamera = document.getElementById('tabCameraBtn');
+    const uploadSec = document.getElementById('uploadSection');
+    const cameraSec = document.getElementById('cameraSection');
+
+    if (mode === 'camera') {
+      tabCamera.style.background = '#0f2b48';
+      tabCamera.style.color = '#fff';
+      tabCamera.style.borderColor = '#0f2b48';
+      tabUpload.style.background = '#f1f5f9';
+      tabUpload.style.color = '#475569';
+      tabUpload.style.borderColor = '#cbd5e1';
+      uploadSec.style.display = 'none';
+      cameraSec.style.display = 'block';
+      startCamera();
+    } else {
+      tabUpload.style.background = '#0f2b48';
+      tabUpload.style.color = '#fff';
+      tabUpload.style.borderColor = '#0f2b48';
+      tabCamera.style.background = '#f1f5f9';
+      tabCamera.style.color = '#475569';
+      tabCamera.style.borderColor = '#cbd5e1';
+      cameraSec.style.display = 'none';
+      uploadSec.style.display = 'block';
+      stopCamera();
+    }
+  }
+
+  async function startCamera() {
+    try {
+      videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      document.getElementById('cameraVideo').srcObject = videoStream;
+    } catch (err) {
+      alert('Camera access denied or unavailable: ' + err.message);
+      switchMode('upload');
+    }
+  }
+
+  function stopCamera() {
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+      videoStream = null;
+    }
+  }
+
+  function handleFileSelected(file) {
+    if (!file) return;
+    selectedFile = file;
+    document.getElementById('previewFilename').textContent = file.name;
+    document.getElementById('previewFilesize').textContent = (file.size / 1024).toFixed(1) + ' KB - Ready for verification audit';
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('imagePreview').src = e.target.result;
+      document.getElementById('uploadSection').style.display = 'none';
+      document.getElementById('previewSection').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function snapCameraPhoto() {
+    const video = document.getElementById('cameraVideo');
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      selectedFile = new File([blob], 'camera_capture.jpg', { type: 'image/jpeg' });
+      document.getElementById('imagePreview').src = canvas.toDataURL('image/jpeg');
+      document.getElementById('previewFilename').textContent = 'camera_capture.jpg';
+      document.getElementById('previewFilesize').textContent = (selectedFile.size / 1024).toFixed(1) + ' KB';
+      stopCamera();
+      document.getElementById('cameraSection').style.display = 'none';
+      document.getElementById('previewSection').style.display = 'block';
+    }, 'image/jpeg');
+  }
+
+  function resetImage() {
+    selectedFile = null;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('previewSection').style.display = 'none';
+    document.getElementById('processingCard').style.display = 'none';
+    switchMode('upload');
+  }
+
+  // Drag & Drop event bindings
+  const dropZone = document.getElementById('dropZone');
+  ['dragenter', 'dragover'].forEach(name => {
+    dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.style.borderColor = '#0f2b48'; }, false);
+  });
+  ['dragleave', 'drop'].forEach(name => {
+    dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.style.borderColor = '#cbd5e1'; }, false);
+  });
+  dropZone.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    if (dt && dt.files && dt.files[0]) {
+      handleFileSelected(dt.files[0]);
+    }
+  });
+
+  async function executeScan() {
+    if (!selectedFile) return;
+
+    document.getElementById('startScanBtn').disabled = true;
+    document.getElementById('processingCard').style.display = 'block';
+
+    setTimeout(() => {
+      document.getElementById('stepText').textContent = '2. Optical Character Recognition (OCR)...';
+      document.getElementById('pStep2').innerHTML = '<i class="fas fa-check-circle" style="color:#16a34a"></i> OCR Text Stream Extracted';
+      document.getElementById('pStep3').style.color = '#0f2b48';
+      document.getElementById('pStep3').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Semantic Extraction of Mandatory Fields...';
+    }, 1500);
+
+    setTimeout(() => {
+      document.getElementById('stepText').textContent = '3. Evaluating Rule 6 Declarations & FSSAI Standards...';
+      document.getElementById('pStep3').innerHTML = '<i class="fas fa-check-circle" style="color:#16a34a"></i> Extracted MRP, Net Qty & Expiry';
+      document.getElementById('pStep4').style.color = '#0f2b48';
+      document.getElementById('pStep4').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deterministic Compliance Evaluation...';
+    }, 3200);
+
+    const formData = new FormData();
+    formData.append('image', selectedFile);
+
+    try {
+      const response = await fetch('/api/scan', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.detail || 'Scan processing failed.');
+      }
+
+      const data = await response.json();
+      if (data.success && data.inspection_id) {
+        window.location.href = `/inspections/${data.inspection_id}`;
+      } else {
+        throw new Error(data.message || 'Inspection failed.');
+      }
+    } catch (err) {
+      alert('Inspection Error: ' + err.message);
+      document.getElementById('startScanBtn').disabled = false;
+      document.getElementById('processingCard').style.display = 'none';
+    }
+  }
+</script>
+{% endblock %}

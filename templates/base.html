@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title|default("Legal Metrology Inspection Portal") }} | Department of Consumer Affairs</title>
+
+  <!-- Design System CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <link rel="stylesheet" href="/static/css/inspection.css">
+  <link rel="stylesheet" href="/static/css/tables.css">
+  <link rel="stylesheet" href="/static/css/responsive.css">
+
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  {% block extra_head %}{% endblock %}
+  <style>
+    /* Government Portal Global Resets */
+    .gov-top-flag-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #f97316 0%, #f97316 33.3%, #ffffff 33.3%, #ffffff 66.6%, #16a34a 66.6%, #16a34a 100%);
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; overflow-x: hidden;">
+  <!-- Official Flag Micro-Bar (Fixed at top without pushing content) -->
+  <div class="gov-top-flag-bar"></div>
+
+  <div class="app-layout" style="display: flex; min-height: 100vh;">
+    
+    <!-- Minimal Government Sidebar (No overflow scrollbars) -->
+    <aside class="sidebar" style="width: 240px; background: #0f2b48; position: fixed; top: 0; bottom: 0; left: 0; z-index: 100; display: flex; flex-direction: column;">
+      
+      <!-- Brand Header -->
+      <div class="sidebar-header" style="height: 56px; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 16px; display: flex; align-items: center;">
+        <a href="/" class="sidebar-brand-link" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 4px; background: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <i class="fas fa-balance-scale" style="color: #0f2b48; font-size: 1rem;"></i>
+          </div>
+          <div style="overflow: hidden; line-height: 1.15;">
+            <div style="font-size: 1rem; font-weight: 800; color: #ffffff; letter-spacing: 0.3px;">MetroLens</div>
+            <div style="font-size: 0.65rem; color: #93c5fd; text-transform: uppercase; font-weight: 700; letter-spacing: 0.4px;">Govt. of India &bull; DoCA</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation Links Container -->
+      <nav class="sidebar-nav" style="padding: 10px 8px; flex: 1; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;">
+        
+        <div style="font-size: 0.64rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 8px; margin: 4px 0 4px 0;">
+          Enforcement Control
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0 0 10px 0;">
+          <li>
+            <a href="/dashboard" class="nav-item {% if active_nav == 'dashboard' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-th-large" style="width: 16px; text-align: center;"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="/new-inspection" class="nav-item {% if active_nav == 'new-inspection' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-camera" style="width: 16px; text-align: center;"></i>
+              <span>Scan Package</span>
+              <span style="background: #b45309; color: #fff; font-size: 0.64rem; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: auto;">Rule 6</span>
+            </a>
+          </li>
+          <li>
+            <a href="/history" class="nav-item {% if active_nav == 'history' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+              <i class="fas fa-clipboard-list" style="width: 16px; text-align: center;"></i>
+              <span>Inspection Ledger</span>
+            </a>
+          </li>
+        </ul>
+
+        <div style="font-size: 0.64rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 8px; margin: 8px 0 4px 0;">
+          Statutory Registries
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0 0 10px 0;">
+          <li>
+            <a href="/companies" class="nav-item {% if active_nav == 'companies' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-building" style="width: 16px; text-align: center;"></i>
+              <span>Companies & Packers</span>
+            </a>
+          </li>
+          <li>
+            <a href="/products" class="nav-item {% if active_nav == 'products' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-boxes" style="width: 16px; text-align: center;"></i>
+              <span>Commodities Database</span>
+            </a>
+          </li>
+          <li>
+            <a href="/reports" class="nav-item {% if active_nav == 'reports' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-file-invoice" style="width: 16px; text-align: center;"></i>
+              <span>Compliance Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/rules" class="nav-item {% if active_nav == 'admin_rules' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+              <i class="fas fa-balance-scale" style="width: 16px; text-align: center;"></i>
+              <span>Rules & Penalties</span>
+            </a>
+          </li>
+        </ul>
+
+        {% if current_user and current_user.role == 'admin' %}
+        <div style="font-size: 0.64rem; font-weight: 700; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 8px; margin: 8px 0 4px 0; display: flex; align-items: center; gap: 5px;">
+          <i class="fas fa-lock" style="font-size: 0.6rem;"></i>
+          <span>Administration</span>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0 0 10px 0;">
+          <li>
+            <a href="/admin/users" class="nav-item {% if active_nav == 'admin_users' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600; margin-bottom: 1px;">
+              <i class="fas fa-users-cog" style="width: 16px; text-align: center; color: #38bdf8;"></i>
+              <span>Officer Directory</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/audit-logs" class="nav-item {% if active_nav == 'admin_audit_logs' %}active{% endif %}" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #cbd5e1; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+              <i class="fas fa-shield-alt" style="width: 16px; text-align: center; color: #38bdf8;"></i>
+              <span>Security Audit Trail</span>
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+
+        <div style="font-size: 0.64rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; padding: 0 8px; margin: 8px 0 4px 0;">
+          Session
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li>
+            <a href="/logout" class="nav-item" style="display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 4px; color: #fca5a5; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+              <i class="fas fa-sign-out-alt" style="width: 16px; text-align: center;"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Officer Profile Footer -->
+      <div style="margin-top: auto; padding: 8px 12px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.18); min-height: 52px; display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 8px; width: 100%;">
+          <div style="width: 30px; height: 30px; border-radius: 4px; {% if current_user and current_user.role == 'admin' %}background: #dc2626; border: 1px solid #f87171;{% elif current_user and current_user.role == 'officer' %}background: #d97706; border: 1px solid #fbbf24;{% else %}background: #1e3a5f; border: 1px solid #3b82f6;{% endif %} color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0;">
+            {{ current_user.full_name[0] if current_user else 'O' }}
+          </div>
+          <div style="flex: 1; overflow: hidden; line-height: 1.2;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ current_user.full_name if current_user else 'Officer' }}
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+              {% if current_user and current_user.role == 'admin' %}
+                <span style="font-size: 0.6rem; padding: 1px 4px; background: rgba(220, 38, 38, 0.3); border: 1px solid #dc2626; color: #fca5a5; border-radius: 2px; font-weight: 700; text-transform: uppercase;">ADMIN</span>
+              {% elif current_user and current_user.role == 'officer' %}
+                <span style="font-size: 0.6rem; padding: 1px 4px; background: rgba(217, 119, 6, 0.3); border: 1px solid #d97706; color: #fde68a; border-radius: 2px; font-weight: 700; text-transform: uppercase;">SUPERVISOR</span>
+              {% else %}
+                <span style="font-size: 0.6rem; padding: 1px 4px; background: rgba(16, 185, 129, 0.3); border: 1px solid #10b981; color: #a7f3d0; border-radius: 2px; font-weight: 700; text-transform: uppercase;">INSPECTOR</span>
+              {% endif %}
+              <span style="font-size: 0.62rem; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ current_user.employee_id if current_user else '' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Panel -->
+    <div class="main-content" style="margin-left: 240px; flex: 1; background: #f8fafc; min-height: 100vh; display: flex; flex-direction: column;">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar" style="height: 56px; background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button id="hamburger-btn" style="display: none; background: none; border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 8px; cursor: pointer;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <h2 style="font-size: 1.05rem; font-weight: 800; color: #0f2b48; margin: 0;">
+              {{ page_title|default("Legal Metrology Inspection Platform") }}
+            </h2>
+            <div style="font-size: 0.72rem; color: #64748b;">
+              Government of India &bull; Department of Consumer Affairs
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f2b48; padding: 4px 10px; border-radius: 4px; font-size: 0.74rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+            <i class="fas fa-shield-alt" style="color: #b45309;"></i> LM (PC) Rules, 2011 Active
+          </span>
+          <a href="/new-inspection" style="background: #0f2b48; color: #ffffff; padding: 6px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #0f2b48; white-space: nowrap;">
+            <i class="fas fa-camera"></i> Scan Package
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Specific Content -->
+      <main class="content-body" style="padding: 20px 24px; flex: 1;">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+  </div>
+
+  <script src="/static/js/navigation.js"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

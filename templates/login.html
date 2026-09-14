@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Officer Sign In | National Legal Metrology Portal</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      color: #0f172a;
+    }
+    .gov-flag-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #f97316 0%, #f97316 33.3%, #ffffff 33.3%, #ffffff 66.6%, #16a34a 66.6%, #16a34a 100%);
+    }
+    .auth-container {
+      min-height: calc(100vh - 4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    .auth-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+      width: 100%;
+      max-width: 440px;
+      padding: 36px 32px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #0f172a;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #0f2b48;
+      box-shadow: 0 0 0 2px rgba(15, 43, 72, 0.1);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 11px;
+      background: #0f2b48;
+      color: #ffffff;
+      border: 1px solid #0f2b48;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: #15385e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official Tricolor Accent Bar -->
+  <div class="gov-flag-bar"></div>
+
+  <div class="auth-container">
+    <div class="auth-card">
+
+      <!-- Official Government Header -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 6px; background: #f1f5f9; color: #0f2b48; margin-bottom: 12px;">
+          <i class="fas fa-balance-scale" style="font-size: 1.4rem;"></i>
+        </div>
+        <div style="font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">
+          Government of India &bull; Department of Consumer Affairs
+        </div>
+        <h1 style="font-size: 1.35rem; font-weight: 800; color: #0f2b48; margin: 4px 0 6px 0;">
+          Officer Portal Sign In
+        </h1>
+        <p style="font-size: 0.84rem; color: #64748b; margin: 0;">
+          Legal Metrology Compliance & Inspection System
+        </p>
+      </div>
+
+      {% if error %}
+        <div style="margin-bottom: 20px; padding: 10px 14px; background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; border-radius: 4px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ error }}</span>
+        </div>
+      {% endif %}
+
+      <form action="/login" method="POST">
+        <input type="hidden" name="next" value="{{ next|default('') }}">
+
+        <div class="form-group">
+          <label class="form-label">Official Email Address</label>
+          <input type="email" id="email" name="email" class="form-input" required placeholder="officer@gov.in" value="{{ email|default('') }}" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Password</label>
+          <input type="password" id="password" name="password" class="form-input" required placeholder="••••••••" />
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-sign-in-alt"></i> Sign In to Portal
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 0.84rem; color: #64748b;">
+        Need an officer account? <a href="/register" style="color: #0f2b48; font-weight: 700; text-decoration: none;">Register here</a>
+        <div style="margin-top: 10px;">
+          <a href="/" style="color: #64748b; text-decoration: none; font-size: 0.8rem;">&larr; Return to National Portal</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Notice Footer -->
+    <div style="margin-top: 16px; font-size: 0.73rem; color: #94a3b8; text-align: center; max-width: 440px; line-height: 1.4;">
+      <i class="fas fa-shield-alt" style="margin-right: 4px;"></i>
+      <strong>Statutory Warning:</strong> Unauthorized access to this government computing resource is an offence punishable under Sections 43 &amp; 66 of the Information Technology Act, 2000. All activities are monitored and logged.
+    </div>
+  </div>
+</body>
+</html>

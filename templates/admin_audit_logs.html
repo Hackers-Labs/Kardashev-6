@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-body" style="padding: 24px;">
+
+  <!-- Page Header -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;">
+    <div>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+        <span style="font-size: 0.72rem; font-weight: 800; background: #0f2b48; color: #ffffff; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
+          <i class="fas fa-fingerprint" style="font-size: 0.65rem;"></i> IT Act 2000 &bull; Sec 65B Admissible
+        </span>
+        <span style="font-size: 0.8rem; color: #64748b;">Statutory Digital Evidence &amp; Surveillance Trail</span>
+      </div>
+      <h1 style="font-size: 1.5rem; font-weight: 800; color: #0f2b48; margin: 0 0 6px 0;">
+        Security &amp; Enforcement Audit Trail
+      </h1>
+      <p style="font-size: 0.88rem; color: #64748b; margin: 0;">
+        Cryptographic, immutable ledger of all official logins, package scans, Section 48 compounding orders, and administrative access changes.
+      </p>
+    </div>
+
+    <!-- Filter Bar -->
+    <form method="GET" action="/admin/audit-logs" style="display: flex; align-items: center; gap: 8px;">
+      <select name="action_filter" onchange="this.form.submit()" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.82rem; background: #ffffff; font-weight: 600; color: #1e293b;">
+        <option value="">-- All Security Events ({{ logs|length }}) --</option>
+        {% for act in actions %}
+          <option value="{{ act }}" {% if selected_action == act %}selected{% endif %}>{{ act }}</option>
+        {% endfor %}
+      </select>
+      {% if selected_action %}
+        <a href="/admin/audit-logs" style="padding: 7px 10px; background: #e2e8f0; color: #475569; border-radius: 4px; font-size: 0.8rem; text-decoration: none; font-weight: 600;">
+          Clear Filter
+        </a>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- Audit Table -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+    <div style="padding: 14px 20px; border-bottom: 1px solid #e2e8f0; background: #fafafa; display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-size: 0.9rem; font-weight: 700; color: #0f2b48;">
+        Chronological Event Ledger (Last 250 Events)
+      </div>
+      <div style="font-size: 0.78rem; color: #64748b;">
+        Tamper-evident SQLite journal
+      </div>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.84rem;">
+      <thead>
+        <tr style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0;">
+          <th style="padding: 12px 18px; width: 170px;">Timestamp (UTC)</th>
+          <th style="padding: 12px 18px; width: 190px;">Action Event</th>
+          <th style="padding: 12px 18px; width: 220px;">Authorized User</th>
+          <th style="padding: 12px 18px; width: 130px;">Client IP</th>
+          <th style="padding: 12px 18px;">Evidentiary Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if not logs %}
+        <tr>
+          <td colspan="5" style="padding: 36px 18px; text-align: center; color: #94a3b8;">
+            <i class="fas fa-history" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+            No audit events found matching the selected filter criteria.
+          </td>
+        </tr>
+        {% endif %}
+
+        {% for l in logs %}
+        <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s ease;">
+          <td style="padding: 12px 18px; font-family: monospace; font-size: 0.78rem; color: #475569; white-space: nowrap;">
+            {{ l.created_at.strftime('%Y-%m-%d %H:%M:%S') if l.created_at else 'N/A' }}
+          </td>
+          <td style="padding: 12px 18px;">
+            {% if 'SUCCESS' in l.action or 'ACTIVATED' in l.action %}
+              <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;">
+                <i class="fas fa-check-circle" style="font-size: 0.65rem;"></i> {{ l.action }}
+              </span>
+            {% elif 'FAILED' in l.action or 'BLOCKED' in l.action or 'UNAUTHORIZED' in l.action %}
+              <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;">
+                <i class="fas fa-times-circle" style="font-size: 0.65rem;"></i> {{ l.action }}
+              </span>
+            {% elif 'COMPOUNDING' in l.action %}
+              <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff;">
+                <i class="fas fa-gavel" style="font-size: 0.65rem;"></i> {{ l.action }}
+              </span>
+            {% elif 'SCAN' in l.action %}
+              <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;">
+                <i class="fas fa-barcode" style="font-size: 0.65rem;"></i> {{ l.action }}
+              </span>
+            {% else %}
+              <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; background: #fef3c7; color: #92400e; border: 1px solid #fde68a;">
+                <i class="fas fa-cog" style="font-size: 0.65rem;"></i> {{ l.action }}
+              </span>
+            {% endif %}
+          </td>
+          <td style="padding: 12px 18px;">
+            {% if l.user %}
+              <div style="font-weight: 700; color: #1e293b; font-size: 0.82rem;">{{ l.user.full_name }}</div>
+              <div style="font-size: 0.72rem; color: #64748b;">{{ l.user.email }} &bull; {{ l.user.employee_id }}</div>
+            {% else %}
+              <div style="font-weight: 600; color: #64748b; font-size: 0.82rem; font-style: italic;">
+                Anonymous / Pre-Auth
+              </div>
+            {% endif %}
+          </td>
+          <td style="padding: 12px 18px; font-family: monospace; font-size: 0.8rem; color: #475569;">
+            {{ l.ip_address or '127.0.0.1' }}
+          </td>
+          <td style="padding: 12px 18px; color: #334155; font-size: 0.82rem; line-height: 1.4;">
+            {{ l.details or '-' }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Statutory Evidence Certificate Note -->
+  <div style="margin-top: 24px; padding: 16px 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.82rem; color: #475569; display: flex; align-items: flex-start; gap: 14px;">
+    <i class="fas fa-shield-alt" style="color: #0f2b48; font-size: 1.3rem; margin-top: 2px;"></i>
+    <div>
+      <div style="font-weight: 800; color: #0f2b48; margin-bottom: 3px;">
+        Evidentiary Admissibility under Section 65B of the Indian Evidence Act, 1872
+      </div>
+      <div>
+        This electronic record is generated and stored in the ordinary course of statutory duties under the Legal Metrology Act, 2009 and the Information Technology Act, 2000. All entries are hashed and timestamped to maintain forensic integrity for quasi-judicial and appellate proceedings.
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

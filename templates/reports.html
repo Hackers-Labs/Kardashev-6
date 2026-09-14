@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="reports-wrapper" style="max-width: 1200px; margin: 0 auto;">
+
+  <div style="margin-bottom: 24px;">
+    <span style="background: #eff6ff; color: #0f2b48; border: 1px solid #bfdbfe; padding: 3px 10px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-bottom: 6px;">
+      Statutory Archive &bull; Sealed Compliance Certificates
+    </span>
+    <h1 style="font-size: 1.5rem; font-weight: 800; color: #0f2b48; margin: 0;">
+      Statutory Compliance Reports & Export Repository
+    </h1>
+    <p style="color: #64748b; font-size: 0.85rem; margin-top: 2px;">
+      Download verified audit reports in officially sealed PDF format or editable Microsoft Word (.docx) format for legal notices.
+    </p>
+  </div>
+
+  <!-- Reports Table Card -->
+  <div class="gov-table-card">
+    <div class="gov-table-scroll">
+      <table class="gov-table">
+        <thead>
+          <tr>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Inspection Number</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Commodity Product</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Manufacturer</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Audit Date</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Compliance Status</th>
+            <th style="padding: 10px 18px; font-size: 0.74rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; text-align: right;">Export Formats</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ins in inspections %}
+          <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s ease;">
+            <td style="padding: 12px 18px; font-family: monospace; font-size: 0.82rem; font-weight: 700; color: #0f2b48;">
+              <a href="/inspections/{{ ins.id }}" style="color: #0f2b48; text-decoration: none;">
+                {{ ins.inspection_number }}
+              </a>
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.86rem; font-weight: 700; color: #1e293b;">
+              {{ ins.product.product_name if ins.product else 'Commodity Package' }}
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.82rem; color: #64748b;">
+              {{ ins.company.company_name if ins.company else 'N/A' }}
+            </td>
+            <td style="padding: 12px 18px; font-size: 0.78rem; color: #64748b;">
+              {{ ins.inspection_date.strftime('%d %b %Y') if ins.inspection_date else 'N/A' }}
+            </td>
+            <td style="padding: 12px 18px;">
+              {% if ins.overall_status == 'COMPLIANT' %}
+                <span style="background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;padding:3px 8px;border-radius:4px;font-size:0.72rem;font-weight:700;">✓ Compliant</span>
+              {% else %}
+                <span style="background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;padding:3px 8px;border-radius:4px;font-size:0.72rem;font-weight:700;">✕ Violation</span>
+              {% endif %}
+            </td>
+            <td style="padding: 12px 18px; text-align: right;">
+              <div style="display: inline-flex; gap: 6px;">
+                <a href="/api/reports/{{ ins.id }}/pdf" style="background: #0f2b48; color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 0.76rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #0f2b48;">
+                  <i class="fas fa-file-pdf"></i> PDF
+                </a>
+                <a href="/api/reports/{{ ins.id }}/docx" style="background: #b45309; color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 0.76rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #92400e;">
+                  <i class="fas fa-file-word"></i> Word (.docx)
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="padding: 40px 18px; text-align: center; color: #64748b;">
+              <i class="fas fa-file-invoice" style="font-size: 1.4rem; color: #cbd5e1; margin-bottom: 8px; display: block;"></i>
+              <div style="font-weight: 700; color: #0f2b48; margin-bottom: 4px;">No Statutory Reports Available</div>
+              <div style="font-size: 0.82rem;">Once you conduct package inspections under your account, official PDF and Word reports will be generated here.</div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

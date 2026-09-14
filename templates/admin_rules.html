@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-body" style="padding: 24px;">
+
+  <!-- Page Header -->
+  <div style="margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+      <span style="font-size: 0.72rem; font-weight: 800; background: #0f2b48; color: #ffffff; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
+        <i class="fas fa-book" style="font-size: 0.65rem;"></i> Statutory Reference
+      </span>
+      <span style="font-size: 0.8rem; color: #64748b;">Government of India &bull; Ministry of Consumer Affairs</span>
+    </div>
+    <h1 style="font-size: 1.5rem; font-weight: 800; color: #0f2b48; margin: 0 0 6px 0;">
+      Legal Metrology Enforcement Manual &amp; Penalties Scale
+    </h1>
+    <p style="font-size: 0.88rem; color: #64748b; margin: 0;">
+      Statutory standards under the Legal Metrology Act, 2009 &amp; Legal Metrology (Packaged Commodities) Rules, 2011 for enforcement officers.
+    </p>
+  </div>
+
+  <!-- Section 1: Rule 6 Mandatory Declarations Matrix -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 24px; overflow: hidden;">
+    <div style="padding: 14px 20px; background: #fafafa; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px;">
+      <i class="fas fa-list-check" style="color: #0f2b48;"></i>
+      <h2 style="font-size: 0.96rem; font-weight: 800; color: #0f2b48; margin: 0;">
+        Rule 6: Mandatory Declarations on Pre-Packaged Commodities
+      </h2>
+    </div>
+    <div style="padding: 20px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.84rem; text-align: left;">
+        <thead>
+          <tr style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0;">
+            <th style="padding: 10px 14px; width: 130px;">Sub-Rule</th>
+            <th style="padding: 10px 14px; width: 220px;">Mandatory Declaration</th>
+            <th style="padding: 10px 14px;">Statutory Format &amp; Guidelines</th>
+            <th style="padding: 10px 14px; width: 140px;">Severity Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(a)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Name &amp; Address of Manufacturer / Packer / Importer</td>
+            <td style="padding: 12px 14px; color: #475569;">Must include full street address, premise name, city, and PIN code. If manufactured by a third party, both manufacturer and marketer/packer must be clearly stated.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Critical</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(b)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Common or Generic Name of the Commodity</td>
+            <td style="padding: 12px 14px; color: #475569;">Must clearly indicate the generic identity of the goods contained (not solely the brand name).</td>
+            <td style="padding: 12px 14px;"><span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">High</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(c)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Net Quantity in Standard Metric Units</td>
+            <td style="padding: 12px 14px; color: #475569;">Weight (g, kg), Volume (ml, l), or Count (number). Must strictly follow standard SI symbols (no capitalization of 'kg', 'g', etc.). Minimum font height rules apply.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Critical</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(d)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Month and Year of Manufacture / Packing / Import</td>
+            <td style="padding: 12px 14px; color: #475569;">In standard format (e.g. MM/YYYY or Month YYYY). Words like "Packed On", "Mfg Date", or "Imported On" must precede.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Critical</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(e)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Maximum Retail Price (MRP)</td>
+            <td style="padding: 12px 14px; color: #475569;">In format: <code>MRP ₹ xx.xx (incl. of all taxes)</code>. Must include unit sale price (per g / per ml / per piece) as mandated by the 2022 Amendment.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">Critical</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(1)(n)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Consumer Care Contact Details</td>
+            <td style="padding: 12px 14px; color: #475569;">Designation of officer, street address, telephone / toll-free helpline, and official email address for consumer grievances.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">High</span></td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 14px; font-weight: 700; color: #0f2b48;">Rule 6(10)</td>
+            <td style="padding: 12px 14px; font-weight: 600;">Country of Origin</td>
+            <td style="padding: 12px 14px; color: #475569;">Mandatory for all imported packages and commodities sold through retail or e-commerce marketplaces in India.</td>
+            <td style="padding: 12px 14px;"><span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">High</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 2: Rule 7 Minimum Font Size Matrix -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 24px; overflow: hidden;">
+    <div style="padding: 14px 20px; background: #fafafa; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px;">
+      <i class="fas fa-text-height" style="color: #0f2b48;"></i>
+      <h2 style="font-size: 0.96rem; font-weight: 800; color: #0f2b48; margin: 0;">
+        Rule 7: Minimum Font Height on Principal Display Panel (PDP)
+      </h2>
+    </div>
+    <div style="padding: 20px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.84rem; text-align: left;">
+        <thead>
+          <tr style="background: #f1f5f9; color: #475569; font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0;">
+            <th style="padding: 10px 14px;">Area of Principal Display Panel (A in cm²)</th>
+            <th style="padding: 10px 14px;">Standard Minimum Height (mm)</th>
+            <th style="padding: 10px 14px;">Blown / Moulded / Perforated Height (mm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 600;">A &le; 50 cm²</td>
+            <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0f2b48;">1.0 mm</td>
+            <td style="padding: 12px 14px; font-family: monospace; color: #475569;">1.5 mm</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 600;">50 cm² &lt; A &le; 100 cm²</td>
+            <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0f2b48;">1.5 mm</td>
+            <td style="padding: 12px 14px; font-family: monospace; color: #475569;">2.0 mm</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 600;">100 cm² &lt; A &le; 500 cm²</td>
+            <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0f2b48;">2.5 mm</td>
+            <td style="padding: 12px 14px; font-family: monospace; color: #475569;">4.0 mm</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 12px 14px; font-weight: 600;">500 cm² &lt; A &le; 2500 cm²</td>
+            <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0f2b48;">4.0 mm</td>
+            <td style="padding: 12px 14px; font-family: monospace; color: #475569;">6.0 mm</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 14px; font-weight: 600;">A &gt; 2500 cm²</td>
+            <td style="padding: 12px 14px; font-family: monospace; font-weight: 700; color: #0f2b48;">6.0 mm</td>
+            <td style="padding: 12px 14px; font-family: monospace; color: #475569;">6.0 mm</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 3: Statutory Penalties & Section 48 Compounding -->
+  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+    <div style="padding: 14px 20px; background: #fafafa; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px;">
+      <i class="fas fa-gavel" style="color: #0f2b48;"></i>
+      <h2 style="font-size: 0.96rem; font-weight: 800; color: #0f2b48; margin: 0;">
+        Statutory Penalties &amp; Compounding Powers (Legal Metrology Act, 2009)
+      </h2>
+    </div>
+    <div style="padding: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafafa;">
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f2b48; margin-bottom: 6px;">
+            Section 36(1) &bull; Non-Standard Pre-Packaged Goods
+          </div>
+          <p style="font-size: 0.8rem; color: #475569; margin: 0 0 10px 0; line-height: 1.4;">
+            Whoever manufactures, packs, imports, sells, or distributes any non-standard package not conforming to Rule 6 declarations:
+          </p>
+          <ul style="font-size: 0.82rem; color: #1e293b; margin: 0; padding-left: 18px; line-height: 1.6;">
+            <li><strong>First Offence:</strong> Fine up to <strong>₹25,000</strong></li>
+            <li><strong>Second Offence:</strong> Fine up to <strong>₹50,000</strong></li>
+            <li><strong>Subsequent Offences:</strong> Fine up to <strong>₹1,00,000</strong> or imprisonment up to 1 year, or both.</li>
+          </ul>
+        </div>
+
+        <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; background: #fafafa;">
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f2b48; margin-bottom: 6px;">
+            Section 48 &bull; Compounding of Offences
+          </div>
+          <p style="font-size: 0.8rem; color: #475569; margin: 0 0 10px 0; line-height: 1.4;">
+            Powers conferred upon Assistant Controller / Authorized Supervisory Officers:
+          </p>
+          <ul style="font-size: 0.82rem; color: #1e293b; margin: 0; padding-left: 18px; line-height: 1.6;">
+            <li>Offences under Section 36 may be compounded before or after the institution of prosecution.</li>
+            <li>Compounding sum shall not exceed the maximum fine prescribed under the respective section.</li>
+            <li>Once compounded, no further proceedings shall be taken against the offender in respect of that offence.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
