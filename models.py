@@ -1,10 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from sqlalchemy import (
     Column, Integer, String, Text, Float, DateTime, ForeignKey, Boolean
 )
 from sqlalchemy.orm import relationship
 from database import Base
+
+def utc_now() -> datetime:
+    """Returns current UTC datetime without deprecation warnings across Python 3.9-3.13+."""
+    return datetime.now(timezone.utc)
 
 class User(Base):
     __tablename__ = "users"
@@ -21,7 +25,7 @@ class User(Base):
     phone = Column(String(20), nullable=True)
     status = Column(String(20), default="Active")  # 'Active', 'Inactive', 'Suspended'
     last_login = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     inspections = relationship("Inspection", foreign_keys="[Inspection.inspector_id]", back_populates="inspector")
     inquiries = relationship("Inquiry", back_populates="inspector")
@@ -37,7 +41,7 @@ class Company(Base):
     email = Column(String(120), nullable=True)
     website = Column(String(150), nullable=True)
     status = Column(String(50), default="Active")
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     products = relationship("Product", back_populates="company")
     inspections = relationship("Inspection", back_populates="company")
@@ -56,7 +60,7 @@ class Product(Base):
     total_violations = Column(Integer, default=0)
     compliance_rate = Column(Float, default=100.0)
     last_inspected_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     company = relationship("Company", back_populates="products")
     inspections = relationship("Inspection", back_populates="product")
@@ -85,8 +89,8 @@ class Inspection(Base):
     adjudicated_by_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     adjudicated_at = Column(DateTime, nullable=True)
     notes = Column(Text, nullable=True)
-    inspection_date = Column(DateTime, default=datetime.utcnow)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    inspection_date = Column(DateTime, default=utc_now)
+    created_at = Column(DateTime, default=utc_now)
 
     @property
     def resolved_annotated_image_url(self) -> str:
@@ -132,7 +136,7 @@ class Violation(Base):
     penalty_amount = Column(Float, default=10000.0)
     notes = Column(Text, nullable=True)
     status = Column(String(50), default="Detected")  # 'Detected', 'Confirmed', 'Resolved'
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     inspection = relationship("Inspection", back_populates="violations")
 
@@ -151,7 +155,7 @@ class Inquiry(Base):
     response_deadline = Column(DateTime, nullable=True)
     manufacturer_response = Column(Text, nullable=True)
     status = Column(String(50), default="Issued")  # 'Issued', 'Responded', 'Resolved'
-    issued_at = Column(DateTime, default=datetime.utcnow)
+    issued_at = Column(DateTime, default=utc_now)
 
     inspector = relationship("User", back_populates="inquiries")
 
@@ -163,6 +167,6 @@ class AuditLog(Base):
     action = Column(String(100), nullable=False)
     details = Column(Text, nullable=True)
     ip_address = Column(String(45), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utc_now)
 
     user = relationship("User")

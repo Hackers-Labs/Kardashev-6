@@ -5,6 +5,39 @@
 
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
 .venv/
-venv/
+venv/
+ENV/
+env/
+
+# SQLite WAL and temporary files
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Runtime Uploads & Generated Reports (preserve directories via .gitkeep)
+static/uploads/*
+!static/uploads/.gitkeep
+!static/uploads/annotated/
+static/uploads/annotated/*
+!static/uploads/annotated/.gitkeep
+!static/uploads/reports/
+static/uploads/reports/*
+!static/uploads/reports/.gitkeep
+
+# Testing & Scratch
+scratch/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+

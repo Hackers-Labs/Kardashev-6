@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timedelta
 from database import engine, SessionLocal, Base
-from models import User, Company, Product, Inspection, InspectionField, Violation, Inquiry, AuditLog
+from models import User, Company, Product, Inspection, InspectionField, Violation, Inquiry, AuditLog, utc_now
 from auth_helper import hash_password
 
 def seed_database():
@@ -114,7 +114,7 @@ def seed_database():
             total_inspections=4,
             total_violations=0,
             compliance_rate=100.0,
-            last_inspected_at=datetime.utcnow() - timedelta(days=2)
+            last_inspected_at=utc_now() - timedelta(days=2)
         )
         p2 = Product(
             id=2,
@@ -127,7 +127,7 @@ def seed_database():
             total_inspections=3,
             total_violations=1,
             compliance_rate=66.7,
-            last_inspected_at=datetime.utcnow() - timedelta(days=3)
+            last_inspected_at=utc_now() - timedelta(days=3)
         )
         p3 = Product(
             id=3,
@@ -140,7 +140,7 @@ def seed_database():
             total_inspections=3,
             total_violations=0,
             compliance_rate=100.0,
-            last_inspected_at=datetime.utcnow() - timedelta(days=7)
+            last_inspected_at=utc_now() - timedelta(days=7)
         )
         p4 = Product(
             id=4,
@@ -153,7 +153,7 @@ def seed_database():
             total_inspections=2,
             total_violations=0,
             compliance_rate=100.0,
-            last_inspected_at=datetime.utcnow() - timedelta(days=12)
+            last_inspected_at=utc_now() - timedelta(days=12)
         )
         db.add_all([p1, p2, p3, p4])
         db.commit()
@@ -174,7 +174,7 @@ def seed_database():
             inspector_decision="confirmed",
             inspector_remarks="All 7 mandatory declarations present and verified in compliant format.",
             notes="Routine surveillance check.",
-            inspection_date=datetime.utcnow() - timedelta(days=2)
+            inspection_date=utc_now() - timedelta(days=2)
         )
         ins2 = Inspection(
             id=2,
@@ -191,7 +191,7 @@ def seed_database():
             inspector_decision="confirmed",
             inspector_remarks="Consumer care email address missing on package label under Rule 6(2). Show-cause notice issued.",
             notes="Notice issued under Section 18 of Legal Metrology Act.",
-            inspection_date=datetime.utcnow() - timedelta(days=3)
+            inspection_date=utc_now() - timedelta(days=3)
         )
         ins3 = Inspection(
             id=3,
@@ -207,7 +207,7 @@ def seed_database():
             compliance_score=100.0,
             inspector_decision="confirmed",
             inspector_remarks="Verification confirmed all statutory details compliant.",
-            inspection_date=datetime.utcnow() - timedelta(days=7)
+            inspection_date=utc_now() - timedelta(days=7)
         )
         db.add_all([ins1, ins2, ins3])
         db.commit()
@@ -254,7 +254,7 @@ def seed_database():
             manufacturer_name="PepsiCo India Holdings Pvt. Ltd.",
             subject="Notice under Rule 6(2) of Legal Metrology Packaged Commodities Rules 2011",
             description="Non-compliance detected during inspection INS-20260904-00102 regarding missing consumer care email declaration.",
-            response_deadline=datetime.utcnow() + timedelta(days=14),
+            response_deadline=utc_now() + timedelta(days=14),
             status="Issued"
         )
         db.add(inq1)
