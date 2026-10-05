@@ -11,9 +11,10 @@ import os
 import time
 
 class Pipeline:
-    def __init__(self, input_path: str, output_dir: str):
+    def __init__(self, input_path: str, output_dir: str, contamination: float = 0.26):
         self.input_path = input_path
         self.output_dir = output_dir
+        self.contamination = contamination
         self.parser = DataParser()
         # Look for ground truth in the same directory as input
         self.gt_path = os.path.join(os.path.dirname(input_path), "ground_truth.json")
@@ -51,7 +52,7 @@ class Pipeline:
         features = fe.extract_features()
         
         # 4. Anomaly Detection
-        detector = AnomalyDetector(contamination=0.26) # 25% of population are planted scenarios
+        detector = AnomalyDetector(contamination=self.contamination)
         anomaly_results = detector.fit_predict(features)
         
         anomalies_count = sum(1 for res in anomaly_results.values() if res["is_anomaly"])
@@ -85,20 +86,62 @@ class Pipeline:
                 
                 reasons = []
                 if feats["tx_velocity"] >= p90_tx_vel and p90_tx_vel > 0:
-                    reasons.append(f"Transaction velocity observed at the top decile of the comparison population ({feats['tx_velocity']:.2f}). Contributes to the anomalous behavioral profile.")
+                    reasons.append(
+                        "Feature: Transaction velocity\n"
+                        f"  Observed value: {feats['tx_velocity']:.2f}\n"
+                        "  Population baseline: 90th percentile\n"
+                        "  Interpretation: Unusually high transaction activity\n"
+                        "  Contribution: Increases prioritization for bot/automation behavior"
+                    )
                 if feats["dst_ip_diversity"] >= p90_ip_div and p90_ip_div > 1:
-                    reasons.append(f"Destination IP diversity observed at the top decile of the comparison population ({feats['dst_ip_diversity']}). Contributes to the anomalous behavioral profile.")
+                    reasons.append(
+                        "Feature: Destination IP Diversity\n"
+                        f"  Observed value: {feats['dst_ip_diversity']}\n"
+                        "  Population baseline: 90th percentile\n"
+                        "  Interpretation: Entity interacts with abnormally many disparate IPs\n"
+                        "  Contribution: Strongly suggests network sweeping or mixing"
+                    )
                 if feats["amount_variance"] >= p90_amt_var and p90_amt_var > 0:
-                    reasons.append(f"Extreme transaction amount variance observed. Contributes to the anomalous behavioral profile.")
+                    reasons.append(
+                        "Feature: Amount Variance\n"
+                        f"  Observed value: {feats['amount_variance']:.2f}\n"
+                        "  Population baseline: 90th percentile\n"
+                        "  Interpretation: Highly erratic transaction amounts\n"
+                        "  Contribution: Associated with unstructured fiat/whale transfers"
+                    )
                 if feats["address_to_tx_ratio"] <= p10_addr_ratio and p10_addr_ratio < 1.0:
-                    reasons.append(f"Highly concentrated address reuse observed (Ratio: {feats['address_to_tx_ratio']:.2f}). Contributes to the anomalous behavioral profile.")
+                    reasons.append(
+                        "Feature: Address-to-Transaction Ratio\n"
+                        f"  Observed value: {feats['address_to_tx_ratio']:.2f}\n"
+                        "  Population baseline: 10th percentile (lower is more anomalous)\n"
+                        "  Interpretation: Extreme recycling of a small address pool\n"
+                        "  Contribution: Classic indicator of wallet reuse patterns"
+                    )
                 if feats.get("fan_out", 0) >= p90_fan_out and p90_fan_out > 0:
-                    reasons.append(f"Graph fan-out observed at the top decile of the comparison population ({feats['fan_out']}). Contributes to the anomalous structural profile.")
+                    reasons.append(
+                        "Feature: Graph Fan-out\n"
+                        f"  Observed value: {feats['fan_out']}\n"
+                        "  Population baseline: 90th percentile\n"
+                        "  Interpretation: Massive direct outbound edge distribution\n"
+                        "  Contribution: Core signal for broadcasting or dispersion behavior"
+                    )
                 if feats.get("neighborhood_size", 0) >= p90_nhood and p90_nhood > 0:
-                    reasons.append(f"Unusually large graph neighborhood observed ({feats['neighborhood_size']}). Contributes to the anomalous structural profile.")
+                    reasons.append(
+                        "Feature: Graph Neighborhood Size\n"
+                        f"  Observed value: {feats['neighborhood_size']}\n"
+                        "  Population baseline: 90th percentile\n"
+                        "  Interpretation: Massive 2-hop topological network\n"
+                        "  Contribution: Identifies highly connected outlier entities"
+                    )
                 
                 if not reasons:
-                    reasons.append("Unusual statistical profile detected by ML engine.")
+                    reasons.append(
+                        "Feature: Aggregate Feature Vector\n"
+                        "  Observed value: N/A\n"
+                        "  Population baseline: ML Engine Baseline\n"
+                        "  Interpretation: Unusual statistical profile detected by ML engine\n"
+                        "  Contribution: General anomalous behavior mapping"
+                    )
                     
                 alerts.append({
                     "alert_id": f"A-{alert_counter:03d}",
@@ -192,7 +235,7 @@ class Pipeline:
         with open(demo_txt_file, 'w') as f:
             f.write("========================================\n")
             f.write("SIH26146 INTELLIGENCE PIPELINE\n")
-            f.write("CONTROLLED DEVELOPMENT FIXTURE\n")
+            f.write("CONTROLLED SYNTHETIC VALIDATION\n")
             f.write("========================================\n\n")
             f.write(f"Runtime: {runtime:.2f} seconds\n")
             f.write(f"Records processed: {summary['valid_records']}\n")
@@ -214,22 +257,23 @@ class Pipeline:
             f.write("----------------------------------------\n")
             f.write("ANOMALY DETECTION (Isolation Forest)\n")
             f.write("----------------------------------------\n")
+            f.write(f"Configuration: contamination={self.contamination}\n")
             f.write(f"Anomalies: {anomalies_count}\n\n")
             f.write("----------------------------------------\n")
-            f.write("ENTITY CLUSTERING (DBSCAN)\n")
+            f.write("BEHAVIORAL CLUSTERING (DBSCAN)\n")
             f.write("----------------------------------------\n")
-            f.write(f"Clusters: {len(real_clusters)}\n")
-            f.write(f"Noise: {noise_count}\n\n")
+            f.write(f"Behavioral populations (Clusters): {len(real_clusters)}\n")
+            f.write(f"Noise (Unclustered): {noise_count}\n\n")
             f.write("----------------------------------------\n")
             f.write("TOP ALERTS\n")
             f.write("----------------------------------------\n")
             for alert in alerts[:3]:
-                f.write(f"\n{alert['alert_id']}\n")
+                f.write(f"\nAlert ID: {alert['alert_id']}\n")
                 f.write(f"Entity: {alert['entity_id']}\n")
-                f.write(f"Confidence: {alert['confidence']:.2f}\n")
-                f.write(f"Anomaly score: {alert['anomaly_score']:.2f}\n")
-                cluster_str = f"{alert['cluster_id']}" if alert['cluster_id'] != -1 else "noise / not assigned to a cluster"
-                f.write(f"Cluster: {cluster_str}\n")
+                f.write(f"Investigation Confidence: {alert['confidence']:.2f} (Ranking Score)\n")
+                f.write(f"Anomaly Score: {alert['anomaly_score']:.2f}\n")
+                cluster_str = f"Behavioral Cluster {alert['cluster_id']}" if alert['cluster_id'] != -1 else "noise / not assigned to a cluster"
+                f.write(f"Behavioral Group: {cluster_str}\n")
                 f.write("Evidence:\n")
                 for r in alert['reasons']:
                     f.write(f"- {r}\n")

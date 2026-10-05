@@ -74,7 +74,7 @@ for idx, alert in enumerate(top_alerts):
         "ENTITY": alert['entity_id'],
         "ANOMALY SCORE": f"{alert['anomaly_score']:.4f}",
         "INVESTIGATION CONFIDENCE": f"{alert['confidence']:.4f}",
-        "CLUSTER": alert['cluster_id'] if alert['cluster_id'] != -1 else "NOISE",
+        "CLUSTER": str(alert['cluster_id']) if alert['cluster_id'] != -1 else "NOISE",
         "PRIMARY SIGNAL": alert['reasons'][0] if alert['reasons'] else "N/A"
     })
 

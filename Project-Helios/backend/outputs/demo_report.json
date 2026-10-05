@@ -30,7 +30,7 @@
   "clustering_model": "DBSCAN",
   "cluster_count": 6,
   "noise_count": 17,
-  "runtime": 0.6882946491241455,
+  "runtime": 0.62890625,
   "top_alerts": [
     {
       "alert_id": "A-009",
@@ -39,10 +39,10 @@
       "confidence": 1.0,
       "cluster_id": -1,
       "reasons": [
-        "Transaction velocity observed at the top decile of the comparison population (1351.13). Contributes to the anomalous behavioral profile.",
-        "Destination IP diversity observed at the top decile of the comparison population (105.0). Contributes to the anomalous behavioral profile.",
-        "Graph fan-out observed at the top decile of the comparison population (149.0). Contributes to the anomalous structural profile.",
-        "Unusually large graph neighborhood observed (287.0). Contributes to the anomalous structural profile."
+        "Feature: Transaction velocity\n  Observed value: 1351.13\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 105.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 149.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 287.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
       ],
       "model": "IsolationForest",
       "features": {
@@ -71,10 +71,10 @@
       "confidence": 0.9767527944154477,
       "cluster_id": -1,
       "reasons": [
-        "Transaction velocity observed at the top decile of the comparison population (1293.20). Contributes to the anomalous behavioral profile.",
-        "Destination IP diversity observed at the top decile of the comparison population (109.0). Contributes to the anomalous behavioral profile.",
-        "Graph fan-out observed at the top decile of the comparison population (148.0). Contributes to the anomalous structural profile.",
-        "Unusually large graph neighborhood observed (289.0). Contributes to the anomalous structural profile."
+        "Feature: Transaction velocity\n  Observed value: 1293.20\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 109.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 148.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 289.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
       ],
       "model": "IsolationForest",
       "features": {
@@ -103,7 +103,7 @@
       "confidence": 0.8728453968743886,
       "cluster_id": -1,
       "reasons": [
-        "Extreme transaction amount variance observed. Contributes to the anomalous behavioral profile."
+        "Feature: Amount Variance\n  Observed value: 1498158264.95\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
       ],
       "model": "IsolationForest",
       "features": {
