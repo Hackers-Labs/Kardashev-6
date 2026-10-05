@@ -1,0 +1,79 @@
+{
+  "num_nodes": 4587,
+  "num_edges": 11166,
+  "node_counts": {
+    "IP": 200,
+    "TX": 3393,
+    "ADDRESS": 994
+  },
+  "edge_counts": {
+    "OBSERVED": 3393,
+    "CONTAINS": 7773
+  },
+  "top_ips": [
+    {
+      "id": "192.168.1.159",
+      "degree": 149
+    },
+    {
+      "id": "192.168.1.155",
+      "degree": 148
+    },
+    {
+      "id": "192.168.1.160",
+      "degree": 130
+    },
+    {
+      "id": "192.168.1.152",
+      "degree": 126
+    },
+    {
+      "id": "192.168.1.158",
+      "degree": 119
+    }
+  ],
+  "top_txs": [
+    {
+      "id": "tx_02155",
+      "degree": 80
+    },
+    {
+      "id": "tx_02154",
+      "degree": 77
+    },
+    {
+      "id": "tx_02174",
+      "degree": 74
+    },
+    {
+      "id": "tx_02170",
+      "degree": 71
+    },
+    {
+      "id": "tx_02171",
+      "degree": 71
+    }
+  ],
+  "top_addrs": [
+    {
+      "id": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa_733",
+      "degree": 707
+    },
+    {
+      "id": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa_855",
+      "degree": 706
+    },
+    {
+      "id": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa_603",
+      "degree": 702
+    },
+    {
+      "id": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa_585",
+      "degree": 73
+    },
+    {
+      "id": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa_55",
+      "degree": 68
+    }
+  ]
+}
