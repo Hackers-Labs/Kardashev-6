@@ -1,0 +1,1577 @@
+{
+  "summary": {
+    "valid_records": 3393,
+    "invalid_records": 0,
+    "quarantined_count": 0
+  },
+  "stats": {
+    "unique_ips": 201,
+    "unique_txids": 3393,
+    "unique_addresses": 994
+  },
+  "alerts": [
+    {
+      "alert_id": "A-009",
+      "entity_id": "192.168.1.159",
+      "anomaly_score": 1.0,
+      "confidence": 1.0,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1351.13\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 105.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 149.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 287.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 149.0,
+        "total_amount": 44.6127,
+        "avg_amount": 0.29941409395973156,
+        "amount_variance": 0.015107304834917347,
+        "amount_concentration": 0.011198604881569598,
+        "dst_ip_diversity": 105.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 137.0,
+        "address_to_tx_ratio": 0.9194630872483222,
+        "tx_velocity": 1351.133501259446,
+        "inter_arrival_avg": 2.6824324324324325,
+        "inter_arrival_std": 1.4096058590496339,
+        "graph_degree": 149.0,
+        "fan_out": 149.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 287.0
+      }
+    },
+    {
+      "alert_id": "A-012",
+      "entity_id": "192.168.1.155",
+      "anomaly_score": 0.9767527944154477,
+      "confidence": 0.9767527944154477,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1293.20\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 109.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 148.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 289.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 148.0,
+        "total_amount": 44.68540000000001,
+        "avg_amount": 0.3019283783783784,
+        "amount_variance": 0.011489217302775748,
+        "amount_concentration": 0.01116919620278659,
+        "dst_ip_diversity": 109.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 140.0,
+        "address_to_tx_ratio": 0.9459459459459459,
+        "tx_velocity": 1293.2038834951456,
+        "inter_arrival_avg": 2.802721088435374,
+        "inter_arrival_std": 1.4783676224032518,
+        "graph_degree": 148.0,
+        "fan_out": 148.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 289.0
+      }
+    },
+    {
+      "alert_id": "A-008",
+      "entity_id": "192.168.1.195",
+      "anomaly_score": 0.8728453968743886,
+      "confidence": 0.8728453968743886,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 1498158264.95\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 358091.5534,
+        "avg_amount": 119363.85113333333,
+        "amount_variance": 1498158264.9479868,
+        "amount_concentration": 0.4577501179339462,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 11.0,
+        "address_to_tx_ratio": 3.6666666666666665,
+        "tx_velocity": 1.3953488372093024,
+        "inter_arrival_avg": 3870.0,
+        "inter_arrival_std": 2070.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 15.0
+      }
+    },
+    {
+      "alert_id": "A-021",
+      "entity_id": "192.168.1.160",
+      "anomaly_score": 0.8604217413369954,
+      "confidence": 0.8604217413369954,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1221.93\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 96.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 130.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 251.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 130.0,
+        "total_amount": 37.474800000000016,
+        "avg_amount": 0.28826769230769234,
+        "amount_variance": 0.012498309571597633,
+        "amount_concentration": 0.013115480269407703,
+        "dst_ip_diversity": 96.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 120.0,
+        "address_to_tx_ratio": 0.9230769230769231,
+        "tx_velocity": 1221.9321148825065,
+        "inter_arrival_avg": 2.9689922480620154,
+        "inter_arrival_std": 1.3636361815377378,
+        "graph_degree": 130.0,
+        "fan_out": 130.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 251.0
+      }
+    },
+    {
+      "alert_id": "A-017",
+      "entity_id": "192.168.1.197",
+      "anomaly_score": 0.8484056464534937,
+      "confidence": 0.8484056464534937,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 762573977.34\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 4.0,
+        "total_amount": 573041.6955,
+        "avg_amount": 143260.423875,
+        "amount_variance": 762573977.3369734,
+        "amount_concentration": 0.30004503328501686,
+        "dst_ip_diversity": 4.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 17.0,
+        "address_to_tx_ratio": 4.25,
+        "tx_velocity": 1.1822660098522169,
+        "inter_arrival_avg": 4060.0,
+        "inter_arrival_std": 1009.1580649234292,
+        "graph_degree": 4.0,
+        "fan_out": 4.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 22.0
+      }
+    },
+    {
+      "alert_id": "A-027",
+      "entity_id": "192.168.1.153",
+      "anomaly_score": 0.8282778943869941,
+      "confidence": 0.8282778943869941,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1158.36\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 76.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 102.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 199.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 102.0,
+        "total_amount": 29.973100000000006,
+        "avg_amount": 0.2938539215686275,
+        "amount_variance": 0.013312328366974241,
+        "amount_concentration": 0.016531489902612672,
+        "dst_ip_diversity": 76.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 96.0,
+        "address_to_tx_ratio": 0.9411764705882353,
+        "tx_velocity": 1158.3596214511042,
+        "inter_arrival_avg": 3.1386138613861387,
+        "inter_arrival_std": 1.3202887695710308,
+        "graph_degree": 102.0,
+        "fan_out": 102.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 199.0
+      }
+    },
+    {
+      "alert_id": "A-048",
+      "entity_id": "192.168.1.156",
+      "anomaly_score": 0.8239642470537385,
+      "confidence": 0.8239642470537385,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1340.26\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 64.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 86.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 169.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 86.0,
+        "total_amount": 26.417999999999992,
+        "avg_amount": 0.30718604651162784,
+        "amount_variance": 0.012737826084369934,
+        "amount_concentration": 0.018737224619577567,
+        "dst_ip_diversity": 64.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 82.0,
+        "address_to_tx_ratio": 0.9534883720930233,
+        "tx_velocity": 1340.2597402597403,
+        "inter_arrival_avg": 2.7176470588235295,
+        "inter_arrival_std": 1.1843267107455895,
+        "graph_degree": 86.0,
+        "fan_out": 86.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 169.0
+      }
+    },
+    {
+      "alert_id": "A-029",
+      "entity_id": "192.168.1.196",
+      "anomaly_score": 0.8227832720393733,
+      "confidence": 0.8227832720393733,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 863463912.13\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 5.0,
+        "total_amount": 560498.6322,
+        "avg_amount": 112099.72644,
+        "amount_variance": 863463912.130346,
+        "amount_concentration": 0.28838282720790553,
+        "dst_ip_diversity": 5.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 17.0,
+        "address_to_tx_ratio": 3.4,
+        "tx_velocity": 1.0033444816053512,
+        "inter_arrival_avg": 4485.0,
+        "inter_arrival_std": 1859.6975560558228,
+        "graph_degree": 5.0,
+        "fan_out": 5.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 23.0
+      }
+    },
+    {
+      "alert_id": "A-047",
+      "entity_id": "192.168.1.152",
+      "anomaly_score": 0.8224576831537307,
+      "confidence": 0.8224576831537307,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1212.83\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 93.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 126.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 248.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 126.0,
+        "total_amount": 38.933099999999996,
+        "avg_amount": 0.30899285714285724,
+        "amount_variance": 0.011976867171201814,
+        "amount_concentration": 0.012752644921673334,
+        "dst_ip_diversity": 93.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 121.0,
+        "address_to_tx_ratio": 0.9603174603174603,
+        "tx_velocity": 1212.8342245989304,
+        "inter_arrival_avg": 2.992,
+        "inter_arrival_std": 1.4056799066643868,
+        "graph_degree": 126.0,
+        "fan_out": 126.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 248.0
+      }
+    },
+    {
+      "alert_id": "A-040",
+      "entity_id": "192.168.1.158",
+      "anomaly_score": 0.7872486488894801,
+      "confidence": 0.7872486488894801,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1322.22\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 91.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 119.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 234.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 119.0,
+        "total_amount": 35.43489999999999,
+        "avg_amount": 0.2977722689075631,
+        "amount_variance": 0.013043712424263821,
+        "amount_concentration": 0.01408780608947676,
+        "dst_ip_diversity": 91.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 114.0,
+        "address_to_tx_ratio": 0.957983193277311,
+        "tx_velocity": 1322.2222222222222,
+        "inter_arrival_avg": 2.7457627118644066,
+        "inter_arrival_std": 1.3727767275468874,
+        "graph_degree": 119.0,
+        "fan_out": 119.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 234.0
+      }
+    },
+    {
+      "alert_id": "A-014",
+      "entity_id": "192.168.1.192",
+      "anomaly_score": 0.7746070535051487,
+      "confidence": 0.7746070535051487,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 19811857.68\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 348074.1342,
+        "avg_amount": 174037.0671,
+        "amount_variance": 19811857.675231747,
+        "amount_concentration": 0.5127876531539183,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 10.0,
+        "address_to_tx_ratio": 5.0,
+        "tx_velocity": 1.518987341772152,
+        "inter_arrival_avg": 4740.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 13.0
+      }
+    },
+    {
+      "alert_id": "A-031",
+      "entity_id": "192.168.1.157",
+      "anomaly_score": 0.7561551821129564,
+      "confidence": 0.7561551821129564,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1283.72\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 73.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 92.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 181.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 92.0,
+        "total_amount": 27.817599999999995,
+        "avg_amount": 0.30236521739130434,
+        "amount_variance": 0.012847406398865785,
+        "amount_concentration": 0.01792749913723686,
+        "dst_ip_diversity": 73.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 88.0,
+        "address_to_tx_ratio": 0.9565217391304348,
+        "tx_velocity": 1283.720930232558,
+        "inter_arrival_avg": 2.8351648351648353,
+        "inter_arrival_std": 1.4620754198292674,
+        "graph_degree": 92.0,
+        "fan_out": 92.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 181.0
+      }
+    },
+    {
+      "alert_id": "A-022",
+      "entity_id": "192.168.1.154",
+      "anomaly_score": 0.7548083488499702,
+      "confidence": 0.7548083488499702,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1265.45\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 84.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 116.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 225.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 116.0,
+        "total_amount": 35.60110000000001,
+        "avg_amount": 0.3069060344827586,
+        "amount_variance": 0.013061746084274673,
+        "amount_concentration": 0.013954624997542207,
+        "dst_ip_diversity": 84.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 108.0,
+        "address_to_tx_ratio": 0.9310344827586207,
+        "tx_velocity": 1265.4545454545455,
+        "inter_arrival_avg": 2.869565217391304,
+        "inter_arrival_std": 1.4050946997664995,
+        "graph_degree": 116.0,
+        "fan_out": 116.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 225.0
+      }
+    },
+    {
+      "alert_id": "A-043",
+      "entity_id": "192.168.1.151",
+      "anomaly_score": 0.7393714556117789,
+      "confidence": 0.7393714556117789,
+      "cluster_id": 5,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1249.48\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 76.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 101.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 199.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 101.0,
+        "total_amount": 31.446099999999994,
+        "avg_amount": 0.3113475247524752,
+        "amount_variance": 0.011809240117635525,
+        "amount_concentration": 0.015804821583598604,
+        "dst_ip_diversity": 76.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 97.0,
+        "address_to_tx_ratio": 0.9603960396039604,
+        "tx_velocity": 1249.4845360824743,
+        "inter_arrival_avg": 2.91,
+        "inter_arrival_std": 1.4566742944117603,
+        "graph_degree": 101.0,
+        "fan_out": 101.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 199.0
+      }
+    },
+    {
+      "alert_id": "A-018",
+      "entity_id": "192.168.1.161",
+      "anomaly_score": 0.7220065907368074,
+      "confidence": 0.7220065907368074,
+      "cluster_id": 2,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 206.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 12.1292,
+        "avg_amount": 4.043066666666667,
+        "amount_variance": 0.3386404422222224,
+        "amount_concentration": 0.3674438544998846,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 202.0,
+        "address_to_tx_ratio": 67.33333333333333,
+        "tx_velocity": 2.535211267605634,
+        "inter_arrival_avg": 2130.0,
+        "inter_arrival_std": 690.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 206.0
+      }
+    },
+    {
+      "alert_id": "A-010",
+      "entity_id": "192.168.1.162",
+      "anomaly_score": 0.6742908735394537,
+      "confidence": 0.6742908735394537,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 1.0,
+        "total_amount": 3.3753,
+        "avg_amount": 3.3753,
+        "amount_variance": 0.0,
+        "amount_concentration": 1.0,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 64.0,
+        "address_to_tx_ratio": 64.0,
+        "tx_velocity": 0.0,
+        "inter_arrival_avg": 0.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 1.0,
+        "fan_out": 1.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 66.0
+      }
+    },
+    {
+      "alert_id": "A-026",
+      "entity_id": "192.168.1.193",
+      "anomaly_score": 0.633411728547114,
+      "confidence": 0.633411728547114,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 728465319.41\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 4.0,
+        "total_amount": 378456.87559999997,
+        "avg_amount": 94614.21889999999,
+        "amount_variance": 728465319.4057384,
+        "amount_concentration": 0.3653130488931194,
+        "dst_ip_diversity": 4.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 13.0,
+        "address_to_tx_ratio": 3.25,
+        "tx_velocity": 1.1822660098522169,
+        "inter_arrival_avg": 4060.0,
+        "inter_arrival_std": 1949.9743588057768,
+        "graph_degree": 4.0,
+        "fan_out": 4.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 18.0
+      }
+    },
+    {
+      "alert_id": "A-015",
+      "entity_id": "192.168.1.185",
+      "anomaly_score": 0.6263807987415216,
+      "confidence": 0.6263807987415216,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 17.61\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.03\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 86.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 90.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 86.0,
+        "total_amount": 263.737,
+        "avg_amount": 3.066709302325582,
+        "amount_variance": 0.22505681502974584,
+        "amount_concentration": 0.015530623310343258,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.03488372093023256,
+        "tx_velocity": 17.610921501706482,
+        "inter_arrival_avg": 206.8235294117647,
+        "inter_arrival_std": 67.32208386390417,
+        "graph_degree": 86.0,
+        "fan_out": 86.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 90.0
+      }
+    },
+    {
+      "alert_id": "A-052",
+      "entity_id": "192.168.1.169",
+      "anomaly_score": 0.6244564974617165,
+      "confidence": 0.6244564974617165,
+      "cluster_id": 2,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 200.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 11.046899999999999,
+        "avg_amount": 3.6822999999999997,
+        "amount_variance": 0.002837246666666651,
+        "amount_concentration": 0.33846599498501845,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 196.0,
+        "address_to_tx_ratio": 65.33333333333333,
+        "tx_velocity": 2.4,
+        "inter_arrival_avg": 2250.0,
+        "inter_arrival_std": 270.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 200.0
+      }
+    },
+    {
+      "alert_id": "A-037",
+      "entity_id": "192.168.1.177",
+      "anomaly_score": 0.6175776875274936,
+      "confidence": 0.6175776875274936,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 52.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Amount Variance\n  Observed value: 3.80\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.03\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 60.0,
+        "total_amount": 367.7431,
+        "avg_amount": 6.129051666666666,
+        "amount_variance": 3.798289504163889,
+        "amount_concentration": 0.026116329578991418,
+        "dst_ip_diversity": 52.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.03333333333333333,
+        "tx_velocity": 3.4383954154727796,
+        "inter_arrival_avg": 1064.7457627118645,
+        "inter_arrival_std": 472.2587481390999,
+        "graph_degree": 60.0,
+        "fan_out": 60.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 63.0
+      }
+    },
+    {
+      "alert_id": "A-024",
+      "entity_id": "192.168.1.163",
+      "anomaly_score": 0.5949395914112428,
+      "confidence": 0.5949395914112428,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 110.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 5.8126999999999995,
+        "avg_amount": 2.9063499999999998,
+        "amount_variance": 0.22958472249999995,
+        "amount_concentration": 0.5824315722469765,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 107.0,
+        "address_to_tx_ratio": 53.5,
+        "tx_velocity": 8.571428571428571,
+        "inter_arrival_avg": 840.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 110.0
+      }
+    },
+    {
+      "alert_id": "A-046",
+      "entity_id": "192.168.1.167",
+      "anomaly_score": 0.5874219500598306,
+      "confidence": 0.5874219500598306,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 127.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 7.0915,
+        "avg_amount": 3.54575,
+        "amount_variance": 0.0013801225000000012,
+        "amount_concentration": 0.5052386660086019,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 124.0,
+        "address_to_tx_ratio": 62.0,
+        "tx_velocity": 4.285714285714286,
+        "inter_arrival_avg": 1680.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 127.0
+      }
+    },
+    {
+      "alert_id": "A-034",
+      "entity_id": "192.168.1.200",
+      "anomaly_score": 0.5860734594521717,
+      "confidence": 0.5860734594521717,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 1683666.50\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 265558.51009999996,
+        "avg_amount": 132779.25504999998,
+        "amount_variance": 1683666.4950630832,
+        "amount_concentration": 0.5048861614320377,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 8.0,
+        "address_to_tx_ratio": 4.0,
+        "tx_velocity": 1.3636363636363638,
+        "inter_arrival_avg": 5280.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 11.0
+      }
+    },
+    {
+      "alert_id": "A-013",
+      "entity_id": "192.168.1.187",
+      "anomaly_score": 0.5751275778520684,
+      "confidence": 0.5751275778520684,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 18.37\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 79.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 79.0,
+        "total_amount": 233.62330000000003,
+        "avg_amount": 2.957256962025316,
+        "amount_variance": 0.25444810548950486,
+        "amount_concentration": 0.01837487956038631,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.0379746835443038,
+        "tx_velocity": 18.372093023255815,
+        "inter_arrival_avg": 198.46153846153845,
+        "inter_arrival_std": 70.14777301647999,
+        "graph_degree": 79.0,
+        "fan_out": 79.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 83.0
+      }
+    },
+    {
+      "alert_id": "A-041",
+      "entity_id": "192.168.1.181",
+      "anomaly_score": 0.5750657943492805,
+      "confidence": 0.5750657943492805,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 17.67\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 81.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 81.0,
+        "total_amount": 245.25879999999992,
+        "avg_amount": 3.0278864197530866,
+        "amount_variance": 0.2895151320377991,
+        "amount_concentration": 0.017161463727295417,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.037037037037037035,
+        "tx_velocity": 17.672727272727276,
+        "inter_arrival_avg": 206.25,
+        "inter_arrival_std": 62.81669762093515,
+        "graph_degree": 81.0,
+        "fan_out": 81.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 85.0
+      }
+    },
+    {
+      "alert_id": "A-042",
+      "entity_id": "192.168.1.168",
+      "anomaly_score": 0.5728624785552953,
+      "confidence": 0.5728624785552953,
+      "cluster_id": 2,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 159.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 8.4338,
+        "avg_amount": 2.8112666666666666,
+        "amount_variance": 0.3073600155555554,
+        "amount_concentration": 0.41832863003628257,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 155.0,
+        "address_to_tx_ratio": 51.666666666666664,
+        "tx_velocity": 1.9148936170212767,
+        "inter_arrival_avg": 2820.0,
+        "inter_arrival_std": 180.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 159.0
+      }
+    },
+    {
+      "alert_id": "A-007",
+      "entity_id": "192.168.1.141",
+      "anomaly_score": 0.5721327460060368,
+      "confidence": 0.5721327460060368,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 30.0,
+        "total_amount": 79.6017,
+        "avg_amount": 2.6533900000000004,
+        "amount_variance": 1.9466818349000001,
+        "amount_concentration": 0.06944952180669509,
+        "dst_ip_diversity": 29.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 55.0,
+        "address_to_tx_ratio": 1.8333333333333333,
+        "tx_velocity": 0.9453781512605042,
+        "inter_arrival_avg": 3939.310344827586,
+        "inter_arrival_std": 2065.6566644556947,
+        "graph_degree": 30.0,
+        "fan_out": 30.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 86.0
+      }
+    },
+    {
+      "alert_id": "A-039",
+      "entity_id": "192.168.1.174",
+      "anomaly_score": 0.5664763284788181,
+      "confidence": 0.5664763284788181,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 50.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.03\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 60.0,
+        "total_amount": 368.65369999999996,
+        "avg_amount": 6.1442283333333325,
+        "amount_variance": 3.1523836340305555,
+        "amount_concentration": 0.02622406882122708,
+        "dst_ip_diversity": 50.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.03333333333333333,
+        "tx_velocity": 3.3613445378151257,
+        "inter_arrival_avg": 1089.1525423728813,
+        "inter_arrival_std": 466.96019550755244,
+        "graph_degree": 60.0,
+        "fan_out": 60.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 63.0
+      }
+    },
+    {
+      "alert_id": "A-020",
+      "entity_id": "192.168.1.170",
+      "anomaly_score": 0.5653541996399413,
+      "confidence": 0.5653541996399413,
+      "cluster_id": 2,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 185.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 10.653599999999999,
+        "avg_amount": 3.5511999999999997,
+        "amount_variance": 0.10536404666666664,
+        "amount_concentration": 0.3761076068183525,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 181.0,
+        "address_to_tx_ratio": 60.333333333333336,
+        "tx_velocity": 2.222222222222222,
+        "inter_arrival_avg": 2430.0,
+        "inter_arrival_std": 330.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 185.0
+      }
+    },
+    {
+      "alert_id": "A-019",
+      "entity_id": "192.168.1.165",
+      "anomaly_score": 0.5649076507368478,
+      "confidence": 0.5649076507368478,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 1.0,
+        "total_amount": 2.2484,
+        "avg_amount": 2.2484,
+        "amount_variance": 0.0,
+        "amount_concentration": 1.0,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 44.0,
+        "address_to_tx_ratio": 44.0,
+        "tx_velocity": 0.0,
+        "inter_arrival_avg": 0.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 1.0,
+        "fan_out": 1.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 46.0
+      }
+    },
+    {
+      "alert_id": "A-035",
+      "entity_id": "192.168.1.191",
+      "anomaly_score": 0.5562695928791812,
+      "confidence": 0.5562695928791812,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 371485455.80\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 297075.4326,
+        "avg_amount": 99025.1442,
+        "amount_variance": 371485455.8007198,
+        "amount_concentration": 0.4014467893094974,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 9.0,
+        "address_to_tx_ratio": 3.0,
+        "tx_velocity": 1.5,
+        "inter_arrival_avg": 3600.0,
+        "inter_arrival_std": 480.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 13.0
+      }
+    },
+    {
+      "alert_id": "A-011",
+      "entity_id": "192.168.1.164",
+      "anomaly_score": 0.5489146251060202,
+      "confidence": 0.5489146251060202,
+      "cluster_id": 2,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 176.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 9.9748,
+        "avg_amount": 3.3249333333333335,
+        "amount_variance": 0.15702667555555552,
+        "amount_concentration": 0.3633957573084172,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 172.0,
+        "address_to_tx_ratio": 57.333333333333336,
+        "tx_velocity": 2.6470588235294117,
+        "inter_arrival_avg": 2040.0,
+        "inter_arrival_std": 360.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 176.0
+      }
+    },
+    {
+      "alert_id": "A-032",
+      "entity_id": "192.168.1.178",
+      "anomaly_score": 0.5466829790476986,
+      "confidence": 0.5466829790476986,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 48.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 55.0,
+        "total_amount": 322.14060000000006,
+        "avg_amount": 5.857101818181819,
+        "amount_variance": 1.9899183790876034,
+        "amount_concentration": 0.0282448098749428,
+        "dst_ip_diversity": 48.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.03636363636363636,
+        "tx_velocity": 3.3811475409836067,
+        "inter_arrival_avg": 1084.4444444444443,
+        "inter_arrival_std": 510.7970049314244,
+        "graph_degree": 55.0,
+        "fan_out": 55.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 58.0
+      }
+    },
+    {
+      "alert_id": "A-051",
+      "entity_id": "192.168.1.179",
+      "anomaly_score": 0.5379152081443604,
+      "confidence": 0.5379152081443604,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 43.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 49.0,
+        "total_amount": 291.50230000000005,
+        "avg_amount": 5.949026530612245,
+        "amount_variance": 2.3971627786838816,
+        "amount_concentration": 0.031281399838011564,
+        "dst_ip_diversity": 43.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.04081632653061224,
+        "tx_velocity": 4.038461538461538,
+        "inter_arrival_avg": 910.0,
+        "inter_arrival_std": 433.2435804486894,
+        "graph_degree": 49.0,
+        "fan_out": 49.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 52.0
+      }
+    },
+    {
+      "alert_id": "A-002",
+      "entity_id": "192.168.1.41",
+      "anomaly_score": 0.5338394352725466,
+      "confidence": 0.5338394352725466,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 26.0,
+        "total_amount": 80.44019999999999,
+        "avg_amount": 3.0938538461538463,
+        "amount_variance": 1.8476672986390537,
+        "amount_concentration": 0.06984443101832169,
+        "dst_ip_diversity": 24.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 59.0,
+        "address_to_tx_ratio": 2.269230769230769,
+        "tx_velocity": 1.164179104477612,
+        "inter_arrival_avg": 3216.0,
+        "inter_arrival_std": 1438.1988735915488,
+        "graph_degree": 26.0,
+        "fan_out": 26.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 86.0
+      }
+    },
+    {
+      "alert_id": "A-005",
+      "entity_id": "192.168.1.100",
+      "anomaly_score": 0.5177127580738523,
+      "confidence": 0.5177127580738523,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 90.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 29.0,
+        "total_amount": 81.2845,
+        "avg_amount": 2.802913793103448,
+        "amount_variance": 1.7377003880856121,
+        "amount_concentration": 0.0727100492713863,
+        "dst_ip_diversity": 27.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 60.0,
+        "address_to_tx_ratio": 2.0689655172413794,
+        "tx_velocity": 0.9753363228699551,
+        "inter_arrival_avg": 3822.8571428571427,
+        "inter_arrival_std": 1977.9767027785474,
+        "graph_degree": 29.0,
+        "fan_out": 29.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 90.0
+      }
+    },
+    {
+      "alert_id": "A-016",
+      "entity_id": "192.168.1.194",
+      "anomaly_score": 0.5161760632526184,
+      "confidence": 0.5161760632526184,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 165568737.20\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 188574.5476,
+        "avg_amount": 94287.2738,
+        "amount_variance": 165568737.19802243,
+        "amount_concentration": 0.5682348268298324,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 5.0,
+        "address_to_tx_ratio": 2.5,
+        "tx_velocity": 1.6,
+        "inter_arrival_avg": 4500.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 8.0
+      }
+    },
+    {
+      "alert_id": "A-045",
+      "entity_id": "192.168.1.166",
+      "anomaly_score": 0.5013765847140392,
+      "confidence": 0.5013765847140392,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Graph Neighborhood Size\n  Observed value: 94.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 5.1366,
+        "avg_amount": 2.5683,
+        "amount_variance": 0.04853208999999997,
+        "amount_concentration": 0.542888291866215,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 91.0,
+        "address_to_tx_ratio": 45.5,
+        "tx_velocity": 2.3076923076923075,
+        "inter_arrival_avg": 3120.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 94.0
+      }
+    },
+    {
+      "alert_id": "A-006",
+      "entity_id": "192.168.1.101",
+      "anomaly_score": 0.4987671350881381,
+      "confidence": 0.4987671350881381,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 27.0,
+        "total_amount": 75.6294,
+        "avg_amount": 2.801088888888889,
+        "amount_variance": 1.5507907980246918,
+        "amount_concentration": 0.07579063168556144,
+        "dst_ip_diversity": 25.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 61.0,
+        "address_to_tx_ratio": 2.259259259259259,
+        "tx_velocity": 1.0156739811912225,
+        "inter_arrival_avg": 3680.769230769231,
+        "inter_arrival_std": 1842.5691158666375,
+        "graph_degree": 27.0,
+        "fan_out": 27.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 89.0
+      }
+    },
+    {
+      "alert_id": "A-050",
+      "entity_id": "192.168.1.183",
+      "anomaly_score": 0.4908611677519351,
+      "confidence": 0.4908611677519351,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 18.67\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 61.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 61.0,
+        "total_amount": 176.27269999999996,
+        "avg_amount": 2.889716393442623,
+        "amount_variance": 0.23309824202633703,
+        "amount_concentration": 0.021762303521759188,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.04918032786885246,
+        "tx_velocity": 18.6734693877551,
+        "inter_arrival_avg": 196.0,
+        "inter_arrival_std": 72.55342858886821,
+        "graph_degree": 61.0,
+        "fan_out": 61.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 65.0
+      }
+    },
+    {
+      "alert_id": "A-028",
+      "entity_id": "192.168.1.198",
+      "anomaly_score": 0.48100975500832044,
+      "confidence": 0.48100975500832044,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 234133975.03\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 229633.5298,
+        "avg_amount": 76544.50993333333,
+        "amount_variance": 234133975.0309898,
+        "amount_concentration": 0.42336963327905086,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 8.0,
+        "address_to_tx_ratio": 2.6666666666666665,
+        "tx_velocity": 1.0843373493975903,
+        "inter_arrival_avg": 4980.0,
+        "inter_arrival_std": 2220.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 12.0
+      }
+    },
+    {
+      "alert_id": "A-030",
+      "entity_id": "192.168.1.173",
+      "anomaly_score": 0.477996581066954,
+      "confidence": 0.477996581066954,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 37.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 41.0,
+        "total_amount": 231.64960000000002,
+        "avg_amount": 5.649990243902439,
+        "amount_variance": 2.7372530794170133,
+        "amount_concentration": 0.042676093548186564,
+        "dst_ip_diversity": 37.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.04878048780487805,
+        "tx_velocity": 3.4166666666666665,
+        "inter_arrival_avg": 1080.0,
+        "inter_arrival_std": 411.7766384825637,
+        "graph_degree": 41.0,
+        "fan_out": 41.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 44.0
+      }
+    },
+    {
+      "alert_id": "A-036",
+      "entity_id": "192.168.1.182",
+      "anomaly_score": 0.4758829463244312,
+      "confidence": 0.4758829463244312,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 19.68\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 62.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 62.0,
+        "total_amount": 185.522,
+        "avg_amount": 2.992290322580645,
+        "amount_variance": 0.2146242702289282,
+        "amount_concentration": 0.021064887183191213,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.04838709677419355,
+        "tx_velocity": 19.682539682539684,
+        "inter_arrival_avg": 185.9016393442623,
+        "inter_arrival_std": 70.16087016443413,
+        "graph_degree": 62.0,
+        "fan_out": 62.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 66.0
+      }
+    },
+    {
+      "alert_id": "A-049",
+      "entity_id": "192.168.1.190",
+      "anomaly_score": 0.4638840152874787,
+      "confidence": 0.4638840152874787,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 17.63\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 62.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 62.0,
+        "total_amount": 183.5601000000001,
+        "avg_amount": 2.9606467741935485,
+        "amount_variance": 0.27694428700572316,
+        "amount_concentration": 0.02384614085522942,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.04838709677419355,
+        "tx_velocity": 17.630331753554504,
+        "inter_arrival_avg": 207.54098360655738,
+        "inter_arrival_std": 63.88144084378827,
+        "graph_degree": 62.0,
+        "fan_out": 62.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 66.0
+      }
+    },
+    {
+      "alert_id": "A-001",
+      "entity_id": "192.168.1.1",
+      "anomaly_score": 0.46354323068235725,
+      "confidence": 0.46354323068235725,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 23.0,
+        "total_amount": 52.493100000000005,
+        "avg_amount": 2.282308695652174,
+        "amount_variance": 1.400046924272212,
+        "amount_concentration": 0.0879620369153279,
+        "dst_ip_diversity": 22.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 38.0,
+        "address_to_tx_ratio": 1.6521739130434783,
+        "tx_velocity": 0.8750792644261255,
+        "inter_arrival_avg": 4300.909090909091,
+        "inter_arrival_std": 1847.4107410862887,
+        "graph_degree": 23.0,
+        "fan_out": 23.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 62.0
+      }
+    },
+    {
+      "alert_id": "A-003",
+      "entity_id": "192.168.1.72",
+      "anomaly_score": 0.46214524243281485,
+      "confidence": 0.46214524243281485,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 25.0,
+        "total_amount": 61.310500000000005,
+        "avg_amount": 2.45242,
+        "amount_variance": 2.56180004,
+        "amount_concentration": 0.09796527511600785,
+        "dst_ip_diversity": 21.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 46.0,
+        "address_to_tx_ratio": 1.84,
+        "tx_velocity": 1.0783608914450036,
+        "inter_arrival_avg": 3477.5,
+        "inter_arrival_std": 1871.2946721454641,
+        "graph_degree": 25.0,
+        "fan_out": 25.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 72.0
+      }
+    },
+    {
+      "alert_id": "A-023",
+      "entity_id": "192.168.1.188",
+      "anomaly_score": 0.4609758973705904,
+      "confidence": 0.4609758973705904,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 17.63\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 72.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 72.0,
+        "total_amount": 219.6117999999999,
+        "avg_amount": 3.050163888888889,
+        "amount_variance": 0.224417317029321,
+        "amount_concentration": 0.018607379020617293,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.041666666666666664,
+        "tx_velocity": 17.63265306122449,
+        "inter_arrival_avg": 207.04225352112675,
+        "inter_arrival_std": 67.39403505592188,
+        "graph_degree": 72.0,
+        "fan_out": 72.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 76.0
+      }
+    },
+    {
+      "alert_id": "A-038",
+      "entity_id": "192.168.1.172",
+      "anomaly_score": 0.4577760007004965,
+      "confidence": 0.4577760007004965,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 36.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 42.0,
+        "total_amount": 266.1966,
+        "avg_amount": 6.338014285714285,
+        "amount_variance": 3.0737722102721086,
+        "amount_concentration": 0.036498587885795686,
+        "dst_ip_diversity": 36.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.047619047619047616,
+        "tx_velocity": 3.230769230769231,
+        "inter_arrival_avg": 1141.4634146341464,
+        "inter_arrival_std": 427.66274024424706,
+        "graph_degree": 42.0,
+        "fan_out": 42.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 45.0
+      }
+    },
+    {
+      "alert_id": "A-044",
+      "entity_id": "192.168.1.176",
+      "anomaly_score": 0.4526144442520269,
+      "confidence": 0.4526144442520269,
+      "cluster_id": 4,
+      "reasons": [
+        "Feature: Destination IP Diversity\n  Observed value: 40.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.04\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 47.0,
+        "total_amount": 254.8886,
+        "avg_amount": 5.42316170212766,
+        "amount_variance": 2.0544482461928477,
+        "amount_concentration": 0.03465827816544169,
+        "dst_ip_diversity": 40.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 2.0,
+        "address_to_tx_ratio": 0.0425531914893617,
+        "tx_velocity": 3.5031055900621118,
+        "inter_arrival_avg": 1050.0,
+        "inter_arrival_std": 445.2795897450031,
+        "graph_degree": 47.0,
+        "fan_out": 47.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 50.0
+      }
+    },
+    {
+      "alert_id": "A-025",
+      "entity_id": "192.168.1.199",
+      "anomaly_score": 0.43578285431028163,
+      "confidence": 0.43578285431028163,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 164045.29\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 2.0,
+        "total_amount": 135103.36609999998,
+        "avg_amount": 67551.68304999999,
+        "amount_variance": 164045.2911275056,
+        "amount_concentration": 0.5029978901465728,
+        "dst_ip_diversity": 2.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 6.0,
+        "address_to_tx_ratio": 3.0,
+        "tx_velocity": 2.7906976744186047,
+        "inter_arrival_avg": 2580.0,
+        "inter_arrival_std": 0.0,
+        "graph_degree": 2.0,
+        "fan_out": 2.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 9.0
+      }
+    },
+    {
+      "alert_id": "A-033",
+      "entity_id": "192.168.1.186",
+      "anomaly_score": 0.4345353299017424,
+      "confidence": 0.4345353299017424,
+      "cluster_id": 3,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 16.81\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Address-to-Transaction Ratio\n  Observed value: 0.05\n  Population baseline: 10th percentile (lower is more anomalous)\n  Interpretation: Extreme recycling of a small address pool\n  Contribution: Classic indicator of wallet reuse patterns",
+        "Feature: Graph Fan-out\n  Observed value: 65.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 65.0,
+        "total_amount": 199.723,
+        "avg_amount": 3.0726615384615386,
+        "amount_variance": 0.24813190913609467,
+        "amount_concentration": 0.020756247402652674,
+        "dst_ip_diversity": 1.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 3.0,
+        "address_to_tx_ratio": 0.046153846153846156,
+        "tx_velocity": 16.810344827586206,
+        "inter_arrival_avg": 217.5,
+        "inter_arrival_std": 68.32825184358224,
+        "graph_degree": 65.0,
+        "fan_out": 65.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 69.0
+      }
+    },
+    {
+      "alert_id": "A-004",
+      "entity_id": "192.168.1.76",
+      "anomaly_score": 0.4298096470449012,
+      "confidence": 0.4298096470449012,
+      "cluster_id": 0,
+      "reasons": [
+        "Feature: Aggregate Feature Vector\n  Observed value: N/A\n  Population baseline: ML Engine Baseline\n  Interpretation: Unusual statistical profile detected by ML engine\n  Contribution: General anomalous behavior mapping"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 22.0,
+        "total_amount": 52.7862,
+        "avg_amount": 2.3993727272727274,
+        "amount_variance": 1.3824028619834712,
+        "amount_concentration": 0.08370369528399468,
+        "dst_ip_diversity": 18.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 45.0,
+        "address_to_tx_ratio": 2.0454545454545454,
+        "tx_velocity": 0.9992429977289933,
+        "inter_arrival_avg": 3774.285714285714,
+        "inter_arrival_std": 1632.0614234139348,
+        "graph_degree": 22.0,
+        "fan_out": 22.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 68.0
+      }
+    }
+  ]
+}

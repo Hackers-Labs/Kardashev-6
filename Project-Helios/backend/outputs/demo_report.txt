@@ -1,0 +1,106 @@
+========================================
+SIH26146 INTELLIGENCE PIPELINE
+CONTROLLED SYNTHETIC VALIDATION
+========================================
+
+Runtime: 0.63 seconds
+Records processed: 3393
+Unique IPs: 201
+Unique TXIDs: 3393
+Unique addresses: 994
+Graph nodes: 4587
+Graph edges: 11166
+Features: 16
+
+----------------------------------------
+SCENARIO VALIDATION (GROUND TRUTH)
+----------------------------------------
+HIGH_VELOCITY: 10/10 detected (100%)
+HIGH_FAN_OUT: 10/10 detected (100%)
+ADDRESS_REUSE: 7/10 detected (70%)
+MULTI_IP_SYBIL: 8/10 detected (80%)
+AMOUNT_GRAPH_OUTLIER: 10/10 detected (100%)
+
+----------------------------------------
+ANOMALY DETECTION (Isolation Forest)
+----------------------------------------
+Configuration: contamination=0.26
+Anomalies: 52
+
+----------------------------------------
+BEHAVIORAL CLUSTERING (DBSCAN)
+----------------------------------------
+Behavioral populations (Clusters): 6
+Noise (Unclustered): 17
+
+----------------------------------------
+TOP ALERTS
+----------------------------------------
+
+Alert ID: A-009
+Entity: 192.168.1.159
+Investigation Confidence: 1.00 (Ranking Score)
+Anomaly Score: 1.00
+Behavioral Group: noise / not assigned to a cluster
+Evidence:
+- Feature: Transaction velocity
+  Observed value: 1351.13
+  Population baseline: 90th percentile
+  Interpretation: Unusually high transaction activity
+  Contribution: Increases prioritization for bot/automation behavior
+- Feature: Destination IP Diversity
+  Observed value: 105.0
+  Population baseline: 90th percentile
+  Interpretation: Entity interacts with abnormally many disparate IPs
+  Contribution: Strongly suggests network sweeping or mixing
+- Feature: Graph Fan-out
+  Observed value: 149.0
+  Population baseline: 90th percentile
+  Interpretation: Massive direct outbound edge distribution
+  Contribution: Core signal for broadcasting or dispersion behavior
+- Feature: Graph Neighborhood Size
+  Observed value: 287.0
+  Population baseline: 90th percentile
+  Interpretation: Massive 2-hop topological network
+  Contribution: Identifies highly connected outlier entities
+
+Alert ID: A-012
+Entity: 192.168.1.155
+Investigation Confidence: 0.98 (Ranking Score)
+Anomaly Score: 0.98
+Behavioral Group: noise / not assigned to a cluster
+Evidence:
+- Feature: Transaction velocity
+  Observed value: 1293.20
+  Population baseline: 90th percentile
+  Interpretation: Unusually high transaction activity
+  Contribution: Increases prioritization for bot/automation behavior
+- Feature: Destination IP Diversity
+  Observed value: 109.0
+  Population baseline: 90th percentile
+  Interpretation: Entity interacts with abnormally many disparate IPs
+  Contribution: Strongly suggests network sweeping or mixing
+- Feature: Graph Fan-out
+  Observed value: 148.0
+  Population baseline: 90th percentile
+  Interpretation: Massive direct outbound edge distribution
+  Contribution: Core signal for broadcasting or dispersion behavior
+- Feature: Graph Neighborhood Size
+  Observed value: 289.0
+  Population baseline: 90th percentile
+  Interpretation: Massive 2-hop topological network
+  Contribution: Identifies highly connected outlier entities
+
+Alert ID: A-008
+Entity: 192.168.1.195
+Investigation Confidence: 0.87 (Ranking Score)
+Anomaly Score: 0.87
+Behavioral Group: noise / not assigned to a cluster
+Evidence:
+- Feature: Amount Variance
+  Observed value: 1498158264.95
+  Population baseline: 90th percentile
+  Interpretation: Highly erratic transaction amounts
+  Contribution: Associated with unstructured fiat/whale transfers
+
+========================================

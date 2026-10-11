@@ -1,0 +1,156 @@
+{
+  "dataset_type": "controlled development fixture",
+  "records_processed": 3393,
+  "unique_ips": 201,
+  "unique_txids": 3393,
+  "unique_addresses": 994,
+  "graph_nodes": 4587,
+  "graph_edges": 11166,
+  "feature_count": 16,
+  "feature_names": [
+    "tx_count",
+    "total_amount",
+    "avg_amount",
+    "amount_variance",
+    "amount_concentration",
+    "dst_ip_diversity",
+    "port_diversity",
+    "address_reuse_count",
+    "address_to_tx_ratio",
+    "tx_velocity",
+    "inter_arrival_avg",
+    "inter_arrival_std",
+    "graph_degree",
+    "fan_out",
+    "fan_in",
+    "neighborhood_size"
+  ],
+  "anomaly_model": "IsolationForest",
+  "anomaly_count": 52,
+  "clustering_model": "DBSCAN",
+  "cluster_count": 6,
+  "noise_count": 17,
+  "runtime": 0.62890625,
+  "top_alerts": [
+    {
+      "alert_id": "A-009",
+      "entity_id": "192.168.1.159",
+      "anomaly_score": 1.0,
+      "confidence": 1.0,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1351.13\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 105.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 149.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 287.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 149.0,
+        "total_amount": 44.6127,
+        "avg_amount": 0.29941409395973156,
+        "amount_variance": 0.015107304834917347,
+        "amount_concentration": 0.011198604881569598,
+        "dst_ip_diversity": 105.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 137.0,
+        "address_to_tx_ratio": 0.9194630872483222,
+        "tx_velocity": 1351.133501259446,
+        "inter_arrival_avg": 2.6824324324324325,
+        "inter_arrival_std": 1.4096058590496339,
+        "graph_degree": 149.0,
+        "fan_out": 149.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 287.0
+      }
+    },
+    {
+      "alert_id": "A-012",
+      "entity_id": "192.168.1.155",
+      "anomaly_score": 0.9767527944154477,
+      "confidence": 0.9767527944154477,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Transaction velocity\n  Observed value: 1293.20\n  Population baseline: 90th percentile\n  Interpretation: Unusually high transaction activity\n  Contribution: Increases prioritization for bot/automation behavior",
+        "Feature: Destination IP Diversity\n  Observed value: 109.0\n  Population baseline: 90th percentile\n  Interpretation: Entity interacts with abnormally many disparate IPs\n  Contribution: Strongly suggests network sweeping or mixing",
+        "Feature: Graph Fan-out\n  Observed value: 148.0\n  Population baseline: 90th percentile\n  Interpretation: Massive direct outbound edge distribution\n  Contribution: Core signal for broadcasting or dispersion behavior",
+        "Feature: Graph Neighborhood Size\n  Observed value: 289.0\n  Population baseline: 90th percentile\n  Interpretation: Massive 2-hop topological network\n  Contribution: Identifies highly connected outlier entities"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 148.0,
+        "total_amount": 44.68540000000001,
+        "avg_amount": 0.3019283783783784,
+        "amount_variance": 0.011489217302775748,
+        "amount_concentration": 0.01116919620278659,
+        "dst_ip_diversity": 109.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 140.0,
+        "address_to_tx_ratio": 0.9459459459459459,
+        "tx_velocity": 1293.2038834951456,
+        "inter_arrival_avg": 2.802721088435374,
+        "inter_arrival_std": 1.4783676224032518,
+        "graph_degree": 148.0,
+        "fan_out": 148.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 289.0
+      }
+    },
+    {
+      "alert_id": "A-008",
+      "entity_id": "192.168.1.195",
+      "anomaly_score": 0.8728453968743886,
+      "confidence": 0.8728453968743886,
+      "cluster_id": -1,
+      "reasons": [
+        "Feature: Amount Variance\n  Observed value: 1498158264.95\n  Population baseline: 90th percentile\n  Interpretation: Highly erratic transaction amounts\n  Contribution: Associated with unstructured fiat/whale transfers"
+      ],
+      "model": "IsolationForest",
+      "features": {
+        "tx_count": 3.0,
+        "total_amount": 358091.5534,
+        "avg_amount": 119363.85113333333,
+        "amount_variance": 1498158264.9479868,
+        "amount_concentration": 0.4577501179339462,
+        "dst_ip_diversity": 3.0,
+        "port_diversity": 1.0,
+        "address_reuse_count": 11.0,
+        "address_to_tx_ratio": 3.6666666666666665,
+        "tx_velocity": 1.3953488372093024,
+        "inter_arrival_avg": 3870.0,
+        "inter_arrival_std": 2070.0,
+        "graph_degree": 3.0,
+        "fan_out": 3.0,
+        "fan_in": 0.0,
+        "neighborhood_size": 15.0
+      }
+    }
+  ],
+  "scenario_validation": {
+    "HIGH_VELOCITY": {
+      "planted": 10,
+      "detected": 10,
+      "recall": 1.0
+    },
+    "HIGH_FAN_OUT": {
+      "planted": 10,
+      "detected": 10,
+      "recall": 1.0
+    },
+    "ADDRESS_REUSE": {
+      "planted": 10,
+      "detected": 7,
+      "recall": 0.7
+    },
+    "MULTI_IP_SYBIL": {
+      "planted": 10,
+      "detected": 8,
+      "recall": 0.8
+    },
+    "AMOUNT_GRAPH_OUTLIER": {
+      "planted": 10,
+      "detected": 10,
+      "recall": 1.0
+    }
+  }
+}
